@@ -1,6 +1,6 @@
 {
   "name": "vue-ueditor-wrap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue2.x + UEditor + v-model双向绑定",
   "main": "index.js",
   "scripts": {
