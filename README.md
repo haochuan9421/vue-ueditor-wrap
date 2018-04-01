@@ -1,6 +1,6 @@
 # vue-ueditor-wrap
 
-> Vue2.x + UEditor + v-model双向绑定。
+> Vue2.x + UEditor + v-model双向绑定。之所以有这个`repo`的原因是1、UEditor依然是国内使用频率极高的所见即所得编辑器而Vue又有着广泛的使用，所以将两者结合使用，是很多Vue项目开发者的切实需求。2、目前没有发现满足这种需求，而使用又很方便的`repo`、有的可能也只是简单的暴露一个`UEditor`的实例，仍然需要开发者手动去调用`getContent`,`setContent`,而通过v-model绑定数据也是很多人期待的方式。于是自己在写公司项目时是就撸了一个，周末整理一样分享出来。
 
 ![image](https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/demo.gif)
 
@@ -63,7 +63,7 @@ $ npm i vue-ueditor-wrap
     data () {
         return {
             myConfig: {
-                // 你的UEditor资源存放的路径，相对于打包后的index.html
+                // 你的UEditor资源存放的路径，相对于打包后的index.html
                 UEDITOR_HOME_URL: './static/UEditor/', 
                 // 编辑器不自动被内容撑高 
                 autoHeightEnabled: false,
