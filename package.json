@@ -1,0 +1,26 @@
+{
+  "name": "vue-ueditor-wrap",
+  "version": "1.0.0",
+  "description": "Vue2.x + UEditor + v-model双向绑定",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaoChuan9421/vue-ueditor-wrap.git"
+  },
+  "keywords": [
+    "ueditor",
+    "vue",
+    "v-model",
+    "富文本编辑器",
+    "百度编辑器"
+  ],
+  "author": "郑昊川",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"
+  },
+  "homepage": "https://github.com/HaoChuan9421/vue-ueditor-wrap#readme"
+}
