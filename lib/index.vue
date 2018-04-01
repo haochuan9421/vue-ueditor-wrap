@@ -75,7 +75,7 @@ export default {
 				configScript.src = this.mixedConfig.UEDITOR_HOME_URL + 'ueditor.config.js'
 				document.getElementsByTagName('head')[0].appendChild(configScript)
 				configScript.onload = function() {
-					if (!!window.UE) {
+					if (!!window.UE && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
 						reslove()
 					} else {
 						console && console.error('加载ueditor.config.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
@@ -88,7 +88,7 @@ export default {
 				coreScript.src = this.mixedConfig.UEDITOR_HOME_URL + 'ueditor.all.min.js'
 				document.getElementsByTagName('head')[0].appendChild(coreScript)
 				coreScript.onload = function() {
-					if (!!window.UE || (!!window.UE && window.UE.getEditor)) {
+					if (!!window.UE && !!window.UE.getEditor) {
 						reslove()
 					} else {
 						console && console.error('加载ueditor.all.min.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
