@@ -33,10 +33,10 @@ export default {
 		}
 	},
 	methods: {
-		// 实例化编辑器之前做JS依赖检测
+		// 实例化编辑器之前-JS依赖检测
 		_beforeInitEditor(value) {
-			// 使用window.UE.getEditor判断更准确，仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象也存在
-			!!window.UE && !!window.UE.getEditor ? this._initEditor(value) : this._loadScript().then(() => this._initEditor(value))
+			// 准确判断ueditor.config.js和ueditor.all.js均已加载 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象也存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象也存在,但为空对象
+			!!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0 && !!window.UE.getEditor ? this._initEditor(value) : this._loadScripts().then(() => this._initEditor(value))
 		},
 		// 实例化编辑器
 		_initEditor(value) {
@@ -53,19 +53,27 @@ export default {
 			})
 		},
 		// 动态添加JS依赖
-		_loadScript() {
+		_loadScripts() {
 			// 确保多个实例同时渲染时不会重复创建SCRIPT标签
-			if (!window.loadEnv) {
-				window.loadEnv = new Event('loadEnv')
-			} else {
+			if (window.loadEnv) {
 				return new Promise((reslove, reject) => {
 					window.addEventListener('loadEnv', function() {
 						reslove()
 					});
 				})
+			} else {
+				window.loadEnv = new Event('loadEnv')
+				return new Promise((reslove, reject) => {
+					// 如果在其他地方只引用ueditor.all.min.js，在加载ueditor.config.js之后仍需要重新加载ueditor.all.min.js，所以必须确保ueditor.config.js已加载
+					this._loadConfig().then(() => this._loadCore()).then(() => {
+						window.dispatchEvent(window.loadEnv);
+						reslove()
+					})
+				})
 			}
-			// 动态添加ueditor.config.js和ueditor.all.js，并保证两个依赖均正常加载后再创建实例
-			let loadConfig = new Promise((reslove, reject) => {
+		},
+		_loadConfig() {
+			return new Promise((reslove, reject) => {
 				if (!!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
 					reslove()
 					return
@@ -82,7 +90,9 @@ export default {
 					}
 				};
 			})
-			let loadCore = new Promise((reslove, reject) => {
+		},
+		_loadCore() {
+			return new Promise((reslove, reject) => {
 				if (!!window.UE && !!window.UE.getEditor) {
 					reslove()
 					return
@@ -98,12 +108,6 @@ export default {
 						console && console.error('加载ueditor.all.min.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
 					}
 				};
-			})
-			return new Promise((reslove, reject) => {
-				Promise.all([loadConfig, loadCore]).then((res) => {
-					window.dispatchEvent(window.loadEnv);
-					reslove()
-				})
 			})
 		},
 		// 设置内容
