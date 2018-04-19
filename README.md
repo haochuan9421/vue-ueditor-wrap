@@ -25,7 +25,7 @@ $ npm i vue-ueditor-wrap
     
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/dist.png" width="500">
 
-    将dist目录下的UEditor资源文件复制并重命名为`UEditor`(只需要选择一个你需要的版本,比如utf8-php),放入`static`目录下
+    将dist目录下的UEditor资源文件解压并重命名为`UEditor`(只需要选择一个你需要的版本,比如utf8-php),放入你项目的`static`目录下
     
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/file.png" width="200">
 
