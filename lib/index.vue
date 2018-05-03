@@ -55,7 +55,7 @@ export default {
     _initEditor(value) {
       this.$nextTick(() => {
         // 没有按官网示例那样链式调用ready方法的原因在于需要拿到getEditor返回的实例
-        this.editor = UE.getEditor(this.id, this.mixedConfig)
+        this.editor = window.UE.getEditor(this.id, this.mixedConfig)
         this.editor.addListener("ready", () => {
           this.$emit('ready', this.editor)
           this.editor.setContent(value)
@@ -69,26 +69,26 @@ export default {
     _loadScripts() {
       // 确保多个实例同时渲染时不会重复创建SCRIPT标签
       if (window.loadEnv) {
-        return new Promise((reslove, reject) => {
+        return new Promise((resolve, reject) => {
           window.loadEnv.on('scriptsLoaded', function() {
-            reslove()
+            resolve()
           });
         })
       } else {
         window.loadEnv = new LoadEvent()
-        return new Promise((reslove, reject) => {
+        return new Promise((resolve, reject) => {
           // 如果在其他地方只引用ueditor.all.min.js，在加载ueditor.config.js之后仍需要重新加载ueditor.all.min.js，所以必须确保ueditor.config.js已加载
           this._loadConfig().then(() => this._loadCore()).then(() => {
             window.loadEnv.emit('scriptsLoaded');
-            reslove()
+            resolve()
           })
         })
       }
     },
     _loadConfig() {
-      return new Promise((reslove, reject) => {
+      return new Promise((resolve, reject) => {
         if (!!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
-          reslove()
+          resolve()
           return
         }
         let configScript = document.createElement('script')
@@ -97,7 +97,7 @@ export default {
         document.getElementsByTagName('head')[0].appendChild(configScript)
         configScript.onload = function() {
           if (!!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
-            reslove()
+            resolve()
           } else {
             console && console.error('加载ueditor.config.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
           }
@@ -105,9 +105,9 @@ export default {
       })
     },
     _loadCore() {
-      return new Promise((reslove, reject) => {
+      return new Promise((resolve, reject) => {
         if (!!window.UE && !!window.UE.getEditor) {
-          reslove()
+          resolve()
           return
         }
         let coreScript = document.createElement('script')
@@ -116,7 +116,7 @@ export default {
         document.getElementsByTagName('head')[0].appendChild(coreScript)
         coreScript.onload = function() {
           if (!!window.UE && !!window.UE.getEditor) {
-            reslove()
+            resolve()
           } else {
             console && console.error('加载ueditor.all.min.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
           }
