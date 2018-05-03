@@ -91,7 +91,11 @@ $ npm i vue-ueditor-wrap
 
 1. 是否支持IE等低版本浏览器？
 
-    因为使用了`Promise`,事件对象`Event`等,所以请自行`bable`,后续也许会加
+    ~~因为使用了`Promise`,事件对象`Event`等,所以请自行`bable`,后续也许会加~~
+
+    v1.2.0开始,支持到IE9
+
+    <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/ie.png" width="500"/>
 
 2. 为什么我会看到这个?
 
