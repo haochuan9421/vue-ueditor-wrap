@@ -39,6 +39,12 @@ export default {
         return {}
       }
     },
+    init: {
+      type: Function,
+      default: function() {
+        return () => {}
+      },
+    },
   },
   computed: {
     mixedConfig() {
@@ -54,6 +60,7 @@ export default {
     // 实例化编辑器
     _initEditor(value) {
       this.$nextTick(() => {
+        this.init()
         // 没有按官网示例那样链式调用ready方法的原因在于需要拿到getEditor返回的实例
         this.editor = window.UE.getEditor(this.id, this.mixedConfig)
         this.editor.addListener("ready", () => {

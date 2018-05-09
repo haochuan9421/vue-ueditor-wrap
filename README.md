@@ -87,6 +87,20 @@ $ npm i vue-ueditor-wrap
         }
     }
     ```
+
+7. 通过传入 init 参数来对 window.UE 进行二次开发，如添加自定义按钮等。init 函数将在 scripts 加载完毕、editor 初始化之前运行。
+   ```html
+    <vue-ueditor-wrap :init="myInit"></vue-ueditor-wrap>
+    ```
+    ```js
+    methods: {
+        myInit() {
+            window.UE.registerUI(/* ... */)
+        }
+    }
+    ```
+   
+   
 ## Issues
 
 1. 是否支持IE等低版本浏览器？
