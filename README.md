@@ -89,7 +89,7 @@ $ npm i vue-ueditor-wrap
     ```
 
 7. 通过传入 init 参数来对 window.UE 进行二次开发，如添加自定义按钮等。init 函数将在 scripts 加载完毕、editor 初始化之前运行。
-   ```html
+    ```html
     <vue-ueditor-wrap :init="myInit"></vue-ueditor-wrap>
     ```
     ```js
@@ -99,8 +99,35 @@ $ npm i vue-ueditor-wrap
         }
     }
     ```
-   
-   
+
+8. 结合 `init` 参数以及本组件提供的 `registerButton` 方法，方便地添加自定义按钮：
+
+    ```html
+    <template>
+        <vue-ueditor-wrap ref-"ueditor" v-model="html" :init="myInit"></vue-ueditor-wrap>
+    </template>
+
+    <script>
+    export default {
+        ...
+        methods: {
+            myInit() {
+                this.$refs.ueditor.registerButton({
+                    name: 'test',
+                    icon: '/statics/test-button.png',
+                    tip: 'Test',
+                    handler: (editor, name) => {
+                        editor.execCommand('inserthtml', `<span>TEST</span>`)
+                    }
+                },
+            })
+        }
+    }
+    </script>
+    ```
+
+    > 参数： `name` 按钮名称；`icon` 按钮图标；`tip` 按钮 hover 时显示的简介；`handler` 以 editor 和 name 为入参的按钮动作函数。
+
 ## Issues
 
 1. 是否支持IE等低版本浏览器？
