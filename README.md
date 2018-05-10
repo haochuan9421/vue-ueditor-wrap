@@ -104,7 +104,7 @@ $ npm i vue-ueditor-wrap
 
     ```html
     <template>
-        <vue-ueditor-wrap ref-"ueditor" v-model="html" :init="myInit"></vue-ueditor-wrap>
+        <vue-ueditor-wrap ref="ueditor" v-model="html" :init="myInit"></vue-ueditor-wrap>
     </template>
 
     <script>
@@ -114,13 +114,13 @@ $ npm i vue-ueditor-wrap
             myInit() {
                 this.$refs.ueditor.registerButton({
                     name: 'test',
-                    icon: '/statics/test-button.png',
-                    tip: 'Test',
+                    icon: '/static/test-button.png',
+                    tip: 'this is a test tip',
                     handler: (editor, name) => {
-                        editor.execCommand('inserthtml', `<span>TEST</span>`)
+                            editor.execCommand('inserthtml', `<span>text inserted by test button</span>`)
                     }
-                },
-            })
+                })
+            }
         }
     }
     </script>
@@ -156,9 +156,11 @@ $ npm i vue-ueditor-wrap
 
     那时因为`v-model`的实现基于`UEditor`实例上`contentChange`事件的监听，由于你输入这些特殊字符时通常是按住`shift`键的，`UEditor`本身的`contentChange`在`shift`键按住时不会触发，你也可以尝试同时按下多个键，你会发现`contentChange`只触发一次。所有我也很无奈呀！请移步[UEditor](https://github.com/fex-team/ueditor)
 
-5. 单图片上传后v-model绑定的是loading小图标,我最新编辑的版本,修复了官方的这个BUG,如果你使用的是官网的资源文件,请替换资源文件或参见[Issue1](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/1))
+5. 单图片上传后v-model绑定的是loading小图标,我最新编辑的版本,修复了官方的这个BUG,如果你使用的是官网的资源文件,请替换资源文件或参见[Issue1](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/1))
 
 > 更多[Issues](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues),由于个人能力有限，如果小伙伴们有好的建议或更炫酷的操作，欢迎`PR`,如果你觉得这个组件给你的开发带来了实实在在的方便，也非常感谢你的Star和关注
+
+> PR之前请先执行`npm run lint`进行代码风格检测,大部分语法细节可以通过`npm run fix`修正,记得修改`package.json`的版本号`version`
 
 ## License
 
