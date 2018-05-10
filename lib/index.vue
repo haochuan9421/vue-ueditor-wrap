@@ -52,6 +52,34 @@ export default {
     }
   },
   methods: {
+      registerButton: ({ name, tip, icon, handler, UE = window.UE }) => {
+      UE.registerUI(name, (editor, name) => {
+        editor.registerCommand(name, {
+          execCommand: () => {
+            handler(editor, name)
+          },
+        })
+        const btn = new window.UE.ui.Button({
+          name,
+          title: tip,
+          cssRules: `background-image: url(${icon}) !important;`,
+          onclick() {
+            editor.execCommand(name)
+          },
+        })
+        editor.addListener('selectionchange', () => {
+          const state = editor.queryCommandState(name)
+          if (state === -1) {
+            btn.setDisabled(true)
+            btn.setChecked(false)
+          } else {
+            btn.setDisabled(false)
+            btn.setChecked(state)
+          }
+        })
+        return btn
+      })
+    },
     // 实例化编辑器之前-JS依赖检测
     _beforeInitEditor(value) {
       // 准确判断ueditor.config.js和ueditor.all.js均已加载 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象也存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象也存在,但为空对象
