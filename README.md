@@ -8,7 +8,9 @@
 
 > Vue2.x + UEditor + v-model双向绑定。之所以有这个`repo`的原因是:<br>&emsp;1、UEditor依然是国内使用频率极高的所见即所得编辑器而Vue又有着广泛的使用，所以将两者结合使用，是很多Vue项目开发者的切实需求。<br>&emsp;2、目前没有发现满足这种需求，而使用又很方便的`repo`、有的可能也只是简单的暴露一个`UEditor`的实例，仍然需要开发者手动去调用`getContent`,`setContent`,而通过v-model绑定数据也是很多人期待的方式。于是自己在写公司项目时就手动撸了一个，周末整理一下分享出来，希望能帮助到有同样需求的小伙伴。
 
-![image](https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/demo.gif)
+<img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/demo.gif" width="400" />
+
+[点击预览](https://haochuan9421.github.io/vue-ueditor-wrap-demo/)
 
 ## Installation
 ```bash
@@ -29,7 +31,7 @@ $ npm i vue-ueditor-wrap
 1. ~~下载[官方资源文件](http://ueditor.baidu.com/website/download.html)~~
 
     > 下载[最新编译的资源文件](https://github.com/HaoChuan9421/vue-ueditor-wrap/tree/master/dist)
-    官方最新的版本是`1.4.3.3`,存在诸多BUG,例如[Issue1](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/1)和[Issue8](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/8),好在[UEditor](https://github.com/fex-team/ueditor)还有一个`1.5.0`的版本在GitHub上维护，该项目修复了一些常见BUG，你可以自己`clone`并[编译](http://fex.baidu.com/ueditor/#dev-bale_width_grunt),为了方便小伙伴们，我把已经编译好的文件放在了`dist`目录下，你可以放心[下载](https://github.com/HaoChuan9421/vue-ueditor-wrap/tree/master/dist)
+    官网下载的版本是`1.4.3.3`,存在诸多BUG,例如[Issue1](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/1)和[Issue8](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/8),且官方不再积极维护。为了世界的和平,针对一些BUG,我进行了[修复](https://github.com/HaoChuan9421/ueditor/commits/dev-1.4.3.3)，并把编译好的文件放在了本仓库的`dist`目录下，你可以放心[下载](https://github.com/HaoChuan9421/vue-ueditor-wrap/tree/master/dist),当然你也可以自己`clone`[官方源码](https://github.com/fex-team/ueditor)并[编译](http://fex.baidu.com/ueditor/#dev-bale_width_grunt)
     
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/dist.png" width="200">
 
