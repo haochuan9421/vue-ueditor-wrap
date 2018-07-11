@@ -24,7 +24,7 @@ export default {
       editor: null,
       defaultConfig: {
         UEDITOR_HOME_URL: './static/UEditor/',
-        zIndex: 9999
+        enableAutoSave: false
       }
     }
   },
