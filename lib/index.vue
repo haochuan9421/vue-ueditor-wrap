@@ -163,6 +163,9 @@ export default {
       value === this.editor.getContent() || this.editor.setContent(value)
     }
   },
+  beforeDestroy () {
+    if (this.editor && this.editor.destroy) this.editor.destroy()
+  },
   // v-model语法糖实现
   watch: {
     value: {
