@@ -44,7 +44,8 @@ export default {
       default: function () {
         return () => {}
       }
-    }
+    },
+    destroy: Boolean
   },
   computed: {
     mixedConfig () {
@@ -164,7 +165,7 @@ export default {
     }
   },
   beforeDestroy () {
-    if (this.editor && this.editor.destroy) this.editor.destroy()
+    if (this.destroy && this.editor && this.editor.destroy) this.editor.destroy()
   },
   // v-model语法糖实现
   watch: {

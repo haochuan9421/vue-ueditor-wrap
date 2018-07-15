@@ -16,15 +16,6 @@
 ```bash
 $ npm i vue-ueditor-wrap
 ```
-## Features
-1. `v-model`双向数据绑定!简单、易用。你的代码里将没有实例化，没有`getContent`,`setContent`，你只需要像绑定input框一样绑定`vue-ueditor-wrap`组件。当然如果你需要获取当前`UEditor`的实例，`vue-ueditor-wrap`也提供`ready`事件，你只需要接收`ready`事件触发函数的第一个参数即可，那就是你想要的。
-
-2. 完全遵从官方API。所有的配置参数和实例方法与官方完全一致，通过给`vue-ueditor-wrap`组件的`config`属性传递一个对象，你就可以得到一个完全独立配置的`UEditor`编辑器。
-
-3. 自动添加依赖。你不需要自己在`index.html`或`main.js`里引入`UEditor`的各种`js`文件。更重要的是即使你在一个页面里同时使用多个`vue-ueditor-wrap`组件，它所依赖的`js`文件也只会加载一次。这么做的原因在于你不需要在用户一打开项目时就先加载大量`UEditor`相关的资源,所有的资源只会在`vue-ueditor-wrap`组件所在页面打开时才加载、当然如果你在`index.html`或`main.js`里引入了相关资源、`vue-ueditor-wrap`也会自动准确判断，你不用担心它会重复加载资源。
-
-4. 每个`vue-ueditor-wrap`组件是完全独立的。你甚至可以在上面使用`v-for`一次渲染99个兔斯基(不要忘记添加`key`值)。
-<img src="http://img.baidu.com/hi/jx2/j_0003.gif">
 
 ## Quick Start(基于vue-cli,[完整DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo))
 
@@ -102,7 +93,12 @@ $ npm i vue-ueditor-wrap
     }
     ```
 
-7. 通过传入 init 参数来对 window.UE 进行二次开发，如添加自定义按钮等。init 函数将在 scripts 加载完毕、editor 初始化之前运行。
+7. 设置是否在组件的`beforeDestroy`钩子里销毁`UEditor`实例
+    ```html
+    <vue-ueditor-wrap :destroy="true"></vue-ueditor-wrap>
+    ```
+
+8. 通过传入 init 参数来对 window.UE 进行二次开发，如添加自定义按钮等。init 函数将在 scripts 加载完毕、editor 初始化之前运行。
     ```html
     <vue-ueditor-wrap :init="myInit"></vue-ueditor-wrap>
     ```
@@ -114,7 +110,7 @@ $ npm i vue-ueditor-wrap
     }
     ```
 
-8. 结合 `init` 参数以及本组件提供的 `registerButton` 方法，方便地添加自定义按钮：
+9. 结合 `init` 参数以及本组件提供的 `registerButton` 方法，方便地添加自定义按钮：
 
     ```html
     <template>
@@ -141,6 +137,15 @@ $ npm i vue-ueditor-wrap
     ```
 
     > 参数： `name` 按钮名称；`icon` 按钮图标；`tip` 按钮 hover 时显示的简介；`handler` 以 editor 和 name 为入参的按钮动作函数。
+## Features
+1. `v-model`双向数据绑定!简单、易用。你的代码里将没有实例化，没有`getContent`,`setContent`，你只需要像绑定input框一样绑定`vue-ueditor-wrap`组件。当然如果你需要获取当前`UEditor`的实例，`vue-ueditor-wrap`也提供`ready`事件，你只需要接收`ready`事件触发函数的第一个参数即可，那就是你想要的。
+
+2. 完全遵从官方API。所有的配置参数和实例方法与官方完全一致，通过给`vue-ueditor-wrap`组件的`config`属性传递一个对象，你就可以得到一个完全独立配置的`UEditor`编辑器。
+
+3. 自动添加依赖。你不需要自己在`index.html`或`main.js`里引入`UEditor`的各种`js`文件。更重要的是即使你在一个页面里同时使用多个`vue-ueditor-wrap`组件，它所依赖的`js`文件也只会加载一次。这么做的原因在于你不需要在用户一打开项目时就先加载大量`UEditor`相关的资源,所有的资源只会在`vue-ueditor-wrap`组件所在页面打开时才加载、当然如果你在`index.html`或`main.js`里引入了相关资源、`vue-ueditor-wrap`也会自动准确判断，你不用担心它会重复加载资源。
+
+4. 每个`vue-ueditor-wrap`组件是完全独立的。你甚至可以在上面使用`v-for`一次渲染99个兔斯基(不要忘记添加`key`值)。
+<img src="http://img.baidu.com/hi/jx2/j_0003.gif">
 
 ## Issues
 
