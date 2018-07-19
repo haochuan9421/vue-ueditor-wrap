@@ -3,6 +3,9 @@
 <p align="center">
     <a href="https://www.npmjs.com/package/vue-ueditor-wrap"><img src="https://img.shields.io/npm/v/vue-ueditor-wrap.svg" alt="Version"></a>
     <a href="https://npmcharts.com/compare/vue-ueditor-wrap?minimal=true"><img src="https://img.shields.io/npm/dm/vue-ueditor-wrap.svg" alt="Downloads"></a>
+    <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"><img src="https://img.shields.io/github/issues-closed/haochuan9421/vue-ueditor-wrap.svg" alt="Issues"></a>
+    <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/commits/master"><img src="https://img.shields.io/github/last-commit/haochuan9421/vue-ueditor-wrap.svg" alt="Commit"></a>
+    <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"><img src="https://img.shields.io/github/issues/detail/last-update/haochuan9421/vue-ueditor-wrap.svg/979.svg" alt="Update"></a>
     <a href="https://www.npmjs.com/package/vue-ueditor-wrap"><img src="https://img.shields.io/npm/l/vue-ueditor-wrap.svg" alt="License"></a>
 </p>
 
