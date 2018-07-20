@@ -1,6 +1,7 @@
 # vue-ueditor-wrap
 
 <p align="center">
+    <a href="https://gitter.im/haochuan9421/vue-ueditor-wrap/"><img src="https://badges.gitter.im/haochuan9421/vue-ueditor-wrap.svg" alt="Chatroom"></a>
     <a href="https://www.npmjs.com/package/vue-ueditor-wrap"><img src="https://img.shields.io/npm/v/vue-ueditor-wrap.svg" alt="Version"></a>
     <a href="https://npmcharts.com/compare/vue-ueditor-wrap?minimal=true"><img src="https://img.shields.io/npm/dm/vue-ueditor-wrap.svg" alt="Downloads"></a>
     <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"><img src="https://img.shields.io/github/issues-closed/haochuan9421/vue-ueditor-wrap.svg" alt="Issues"></a>
@@ -13,7 +14,7 @@
 
 <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/demo.gif" width="400" />
 
-[点击预览](https://haochuan9421.github.io/vue-ueditor-wrap-demo/)
+[点击预览](https://haochuan9421.github.io/vue-ueditor-wrap-demo/)&emsp;[加入聊天室](https://gitter.im/haochuan9421/vue-ueditor-wrap/)
 
 ## Installation
 ```bash
