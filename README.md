@@ -34,9 +34,9 @@ $ npm i vue-ueditor-wrap
     
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/file.png" width="200">
 
-    > 因为`Ueditor`本身也依赖`ZeroClipboard`,`codemirror`等第三方库，并在`Ueditor`源码中有自动引入依赖的方法。所以没有直接将`Ueditor`封装在当前组件中，我提供的只是一个`Wrapper`以及自动加载。这也就是为什么你还需要去官网下载`Ueditor`。如果小伙伴们有更好的解决方案，欢迎`PR`。
+    > 因为`Ueditor`本身也依赖`ZeroClipboard`,`codemirror`等第三方库，并在`Ueditor`源码中有自动引入依赖的方法。所以没有直接将`Ueditor`封装在当前组件中，我提供的只是一个`Wrapper`。这也就是为什么你还需要下载`Ueditor`的资源文件。如果小伙伴们有更好的解决方案，欢迎`PR`。
     
-    > 如果你的项目中有出现`ZeroClipboard`,`codemirror`等字眼的相关报错,很可能的原因就是因为你没有按照我的方法放置`Ueditor`资源文件。当然你也可以根据你的项目结构修改`UEDITOR_HOME_URL`,具体参见[官方文档](http://fex.baidu.com/ueditor/)和`步骤5`
+    > 如果你的项目中有出现`ZeroClipboard`,`codemirror`等字眼的相关报错,很可能的原因就是因为你没有按照我的方式放置`Ueditor`资源文件。当然你也可以根据你的项目结构修改`UEDITOR_HOME_URL`,具体参见[官方文档](http://fex.baidu.com/ueditor/)和`步骤5`
 
 2. 引入`VueUeditorWrap`组件
 
@@ -92,7 +92,7 @@ $ npm i vue-ueditor-wrap
     ```js
     methods: {
         ready(editorInstance) {
-            console.log(`你要的实例${editorInstance.key}: `,editorInstance)
+            console.log(`编辑器实例${editorInstance.key}: `,editorInstance)
         }
     }
     ```
@@ -142,11 +142,11 @@ $ npm i vue-ueditor-wrap
 
     > 参数： `name` 按钮名称；`icon` 按钮图标；`tip` 按钮 hover 时显示的简介；`handler` 以 editor 和 name 为入参的按钮动作函数。
 ## Features
-1. `v-model`双向数据绑定!简单、易用。你的代码里将没有实例化，没有`getContent`,`setContent`，你只需要像绑定input框一样绑定`vue-ueditor-wrap`组件。当然如果你需要获取当前`UEditor`的实例，`vue-ueditor-wrap`也提供`ready`事件，你只需要接收`ready`事件触发函数的第一个参数即可，那就是你想要的。
+1. `v-model`双向数据绑定!简单、易用。像绑定input框一样绑定`vue-ueditor-wrap`组件即可，你的代码里将没有实例化，没有`getContent`,`setContent`。
 
 2. 完全遵从官方API。所有的配置参数和实例方法与官方完全一致，通过给`vue-ueditor-wrap`组件的`config`属性传递一个对象，你就可以得到一个完全独立配置的`UEditor`编辑器。
 
-3. 自动添加依赖。你不需要自己在`index.html`或`main.js`里引入`UEditor`的各种`js`文件。更重要的是即使你在一个页面里同时使用多个`vue-ueditor-wrap`组件，它所依赖的`js`文件也只会加载一次。这么做的原因在于你不需要在用户一打开项目时就先加载大量`UEditor`相关的资源,所有的资源只会在`vue-ueditor-wrap`组件所在页面打开时才加载、当然如果你在`index.html`或`main.js`里引入了相关资源、`vue-ueditor-wrap`也会自动准确判断，你不用担心它会重复加载资源。
+3. 自动添加依赖文件。你不需要自己在`index.html`或`main.js`里引入`UEditor`的各种`js`文件。更重要的是即使你在一个页面里同时使用多个`vue-ueditor-wrap`组件，它所依赖的`js`文件也只会加载一次。这么做的原因在于你不需要当用户一打开项目就先加载大量`UEditor`相关的资源,所有的资源文件只会在`vue-ueditor-wrap`组件第一次被激活时才加载。当然如果你在`index.html`或`main.js`里引入了相关资源、`vue-ueditor-wrap`也会准确判断，你不用担心它会重复加载资源。
 
 4. 每个`vue-ueditor-wrap`组件是完全独立的。你甚至可以在上面使用`v-for`一次渲染99个兔斯基(不要忘记添加`key`值)。
 <img src="http://img.baidu.com/hi/jx2/j_0003.gif">
@@ -155,9 +155,9 @@ $ npm i vue-ueditor-wrap
 
 1. 是否支持IE等低版本浏览器？
 
-    ~~因为使用了`Promise`,事件对象`Event`等,所以请自行`bable`,后续也许会加~~
+    ~~因为使用了`Promise`,事件对象`Event`等,所以请自行`babel`,后续也许会加~~
 
-    v1.2.0开始,支持到IE9
+    支持IE9
 
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/ie.png" width="500"/>
 
@@ -167,11 +167,11 @@ $ npm i vue-ueditor-wrap
 
     这是因为你的`UEDITOR_HOME_URL`路径填写错误,请参考`步骤5`
 
-3. 为什么我会看到`后台配置项返回格式出错`  
+3. 为什么我会看到`后台配置项返回格式出错`？我如何上传图片和文件？
 
     ![image](https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/error2.png)
 
-    那时因为`UEditor`包含上传图片、文件等需要与后台配合的功能，而你没有在`config`中设置正确的`serverUrl`,`UEditor`默认的地址是根据你下载版本生成的，去找你的后端小伙伴要吧
+    `UEditor`的上传图片、文件等是需要与后台配合的功能，而你没有在`config`中设置正确的`serverUrl`,`UEditor`默认的地址是根据你下载版本生成的，去找你的后端小伙伴要吧
 
     ![image](https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/error3.png)
 
