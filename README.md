@@ -4,13 +4,12 @@
     <a href="https://gitter.im/haochuan9421/vue-ueditor-wrap/"><img src="https://badges.gitter.im/haochuan9421/vue-ueditor-wrap.svg" alt="Chatroom"></a>
     <a href="https://www.npmjs.com/package/vue-ueditor-wrap"><img src="https://img.shields.io/npm/v/vue-ueditor-wrap.svg" alt="Version"></a>
     <a href="https://npmcharts.com/compare/vue-ueditor-wrap?minimal=true"><img src="https://img.shields.io/npm/dm/vue-ueditor-wrap.svg" alt="Downloads"></a>
-    <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"><img src="https://img.shields.io/github/issues-closed/haochuan9421/vue-ueditor-wrap.svg" alt="Issues"></a>
     <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/commits/master"><img src="https://img.shields.io/github/last-commit/haochuan9421/vue-ueditor-wrap.svg" alt="Commit"></a>
-    <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"><img src="https://img.shields.io/github/issues/detail/last-update/haochuan9421/vue-ueditor-wrap.svg/979.svg" alt="Update"></a>
+    <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"><img src="https://img.shields.io/github/issues-closed/haochuan9421/vue-ueditor-wrap.svg" alt="Issues"></a>
     <a href="https://www.npmjs.com/package/vue-ueditor-wrap"><img src="https://img.shields.io/npm/l/vue-ueditor-wrap.svg" alt="License"></a>
 </p>
 
-> Vue2.x + UEditor + v-model双向绑定。之所以有这个`repo`的原因是:<br>&emsp;1、UEditor依然是国内使用频率极高的所见即所得编辑器而Vue又有着广泛的使用，所以将两者结合使用，是很多Vue项目开发者的切实需求。<br>&emsp;2、目前没有发现满足这种需求，而使用又很方便的`repo`、有的可能也只是简单的暴露一个`UEditor`的实例，仍然需要开发者手动去调用`getContent`,`setContent`,而通过v-model绑定数据也是很多人期待的方式。于是自己在写公司项目时就手动撸了一个，周末整理一下分享出来，希望能帮助到有同样需求的小伙伴。
+> Vue + UEditor + v-model双向绑定。之所以有这个`repo`的原因是:<br>&emsp;1、UEditor依然是国内使用频率极高的所见即所得编辑器而Vue又有着广泛的使用，所以将两者结合使用，是很多Vue项目开发者的切实需求。<br>&emsp;2、目前没有发现满足这种需求，而使用又很方便的`repo`、有的可能也只是简单的暴露一个`UEditor`的实例，仍然需要开发者手动去调用`getContent`,`setContent`,而通过v-model绑定数据也是很多人期待的方式。于是自己在写公司项目时就手动撸了一个，周末整理一下分享出来，希望能帮助到有同样需求的小伙伴。
 
 <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/demo.gif" width="400" />
 
@@ -21,7 +20,7 @@
 $ npm i vue-ueditor-wrap
 ```
 
-## Quick Start(基于vue-cli,[完整DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo))
+## Quick Start(基于vue-cli 2.x,[完整DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo))
 
 1. ~~下载[官方资源文件](http://ueditor.baidu.com/website/download.html)~~
 
@@ -34,9 +33,7 @@ $ npm i vue-ueditor-wrap
     
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/file.png" width="200">
 
-    > 因为`Ueditor`本身也依赖`ZeroClipboard`,`codemirror`等第三方库，并在`Ueditor`源码中有自动引入依赖的方法。所以没有直接将`Ueditor`封装在当前组件中，我提供的只是一个`Wrapper`。这也就是为什么你还需要下载`Ueditor`的资源文件。如果小伙伴们有更好的解决方案，欢迎`PR`。
-    
-    > 如果你的项目中有出现`ZeroClipboard`,`codemirror`等字眼的相关报错,很可能的原因就是因为你没有按照我的方式放置`Ueditor`资源文件。当然你也可以根据你的项目结构修改`UEDITOR_HOME_URL`,具体参见[官方文档](http://fex.baidu.com/ueditor/)和`步骤5`
+    > 如果你使用的是 [vue-cli 3.x](https://cli.vuejs.org/zh/guide/), 把UEditor资源文件解压并重命名为`UEditor`,然后放入你项目的`public`目录下, 并在第五步添加配置 `UEDITOR_HOME_URL: './UEditor/'`
 
 2. 引入`VueUeditorWrap`组件
 
@@ -55,7 +52,7 @@ $ npm i vue-ueditor-wrap
     ```js
     data () {
         return {
-            msg: '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/>Vue2.x + UEditor + v-model双向绑定</h2>'
+            msg: '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/>Vue + UEditor + v-model双向绑定</h2>'
         }
     }
     ```
@@ -159,7 +156,7 @@ $ npm i vue-ueditor-wrap
 
     支持IE9
 
-    <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/ie.png" width="500"/>
+    <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/ie.jpg" width="500"/>
 
 2. 为什么我会看到这个?
 
