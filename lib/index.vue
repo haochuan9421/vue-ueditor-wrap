@@ -22,6 +22,8 @@ export default {
     return {
       id: 'editor' + Math.random().toString().slice(-10),
       editor: null,
+      isReady: false, // 实例是否已经ready
+      readyValue: '', // ready之后给编辑器设置的值
       defaultConfig: {
         UEDITOR_HOME_URL: './static/UEditor/',
         enableAutoSave: false
@@ -53,6 +55,7 @@ export default {
     }
   },
   methods: {
+    // 添加自定义按钮
     registerButton: ({ name, icon, tip, handler, UE = window.UE }) => {
       UE.registerUI(name, (editor, name) => {
         editor.registerCommand(name, {
@@ -83,18 +86,19 @@ export default {
     },
     // 实例化编辑器之前-JS依赖检测
     _beforeInitEditor (value) {
-      // 准确判断ueditor.config.js和ueditor.all.js均已加载 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象也存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象也存在,但为空对象
+      // 准确判断ueditor.config.js和ueditor.all.js是否均已加载 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象也存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象也存在,但为空对象
       !!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0 && !!window.UE.getEditor ? this._initEditor(value) : this._loadScripts().then(() => this._initEditor(value))
     },
     // 实例化编辑器
     _initEditor (value) {
       this.$nextTick(() => {
         this.init()
-        // 没有按官网示例那样链式调用ready方法的原因在于需要拿到getEditor返回的实例
         this.editor = window.UE.getEditor(this.id, this.mixedConfig)
+        this.readyValue = value
         this.editor.addListener('ready', () => {
+          this.isReady = true
           this.$emit('ready', this.editor)
-          this.editor.setContent(value)
+          this.editor.setContent(this.readyValue)
           this.editor.addListener('contentChange', () => {
             this.$emit('input', this.editor.getContent())
           })
@@ -161,7 +165,11 @@ export default {
     },
     // 设置内容
     _setContent (value) {
-      value === this.editor.getContent() || this.editor.setContent(value)
+      if (this.isReady) {
+        value === this.editor.getContent() || this.editor.setContent(value)
+      } else {
+        this.readyValue = value
+      }
     }
   },
   beforeDestroy () {
