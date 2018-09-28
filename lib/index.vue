@@ -1,5 +1,5 @@
 <template>
-  <script :id="id" type="text/plain"></script>
+  <script :id="id" :name="name" type="text/plain"></script>
 </template>
 
 <script>
@@ -47,7 +47,8 @@ export default {
         return () => {}
       }
     },
-    destroy: Boolean
+    destroy: Boolean,
+    name: String
   },
   computed: {
     mixedConfig () {
