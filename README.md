@@ -33,7 +33,7 @@ $ npm i vue-ueditor-wrap
     
     <img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/file.png" width="200">
 
-    > 如果你使用的是 [vue-cli 3.x](https://cli.vuejs.org/zh/guide/), 把UEditor资源文件解压并重命名为`UEditor`,然后放入你项目的`public`目录下, 并在第五步添加配置 `UEDITOR_HOME_URL: './UEditor/'`
+    > 如果你使用的是 [vue-cli 3.x](https://cli.vuejs.org/zh/guide/), 把UEditor资源文件解压并重命名为`UEditor`,然后放入你项目的`public`目录下, 并在第五步添加配置 `UEDITOR_HOME_URL: './UEditor/'`(路由使用`history1模式需要使用绝对路径)
 
 2. 引入`VueUeditorWrap`组件
 
