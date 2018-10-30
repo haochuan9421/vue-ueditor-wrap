@@ -33,7 +33,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: 'Vue + UEditor + v-model双向绑定'
+      default: ''
     },
     config: {
       type: Object,
