@@ -22,8 +22,8 @@ export default {
     return {
       id: 'editor' + Math.random().toString().slice(-10),
       editor: null,
-      isReady: false, // 实例是否已经ready
-      readyValue: '', // ready之后给编辑器设置的值
+      status: 0,
+      initValue: '',
       defaultConfig: {
         UEDITOR_HOME_URL: './static/UEditor/',
         enableAutoSave: false
@@ -47,8 +47,14 @@ export default {
         return () => {}
       }
     },
-    destroy: Boolean,
-    name: String
+    destroy: {
+      type: Boolean,
+      default: false
+    },
+    name: {
+      type: String,
+      default: ''
+    }
   },
   computed: {
     mixedConfig () {
@@ -85,50 +91,45 @@ export default {
         return btn
       })
     },
-    // 实例化编辑器之前-JS依赖检测
-    _beforeInitEditor (value) {
-      // 准确判断ueditor.config.js和ueditor.all.js是否均已加载 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象也存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象也存在,但为空对象
-      !!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0 && !!window.UE.getEditor ? this._initEditor(value) : this._loadScripts().then(() => this._initEditor(value))
-    },
     // 实例化编辑器
-    _initEditor (value) {
+    _initEditor () {
       this.$nextTick(() => {
         this.init()
         this.editor = window.UE.getEditor(this.id, this.mixedConfig)
-        this.readyValue = value
         this.editor.addListener('ready', () => {
-          this.isReady = true
+          this.status = 2
+          this.editor.setContent(this.initValue)
           this.$emit('ready', this.editor)
-          this.editor.setContent(this.readyValue)
           this.editor.addListener('contentChange', () => {
             this.$emit('input', this.editor.getContent())
           })
         })
       })
     },
-    // 动态添加JS依赖
-    _loadScripts () {
-      // 确保多个实例同时渲染时不会重复创建SCRIPT标签
-      if (window.loadEnv) {
-        return new Promise((resolve, reject) => {
-          window.loadEnv.on('scriptsLoaded', function () {
+    // 检测依赖,确保 UEditor 资源文件已加载完毕
+    _checkDependencies () {
+      return new Promise((resolve, reject) => {
+        // 判断ueditor.config.js和ueditor.all.js是否均已加载(仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象存在,但为空对象)
+        let scriptsLoaded = !!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0 && !!window.UE.getEditor
+        if (scriptsLoaded) {
+          resolve()
+        } else if (window.loadEnv) { // 利用订阅发布，确保同时渲染多个组件时，不会重复创建script标签
+          window.loadEnv.on('scriptsLoaded', () => {
             resolve()
           })
-        })
-      } else {
-        window.loadEnv = new LoadEvent()
-        return new Promise((resolve, reject) => {
+        } else {
+          window.loadEnv = new LoadEvent()
           // 如果在其他地方只引用ueditor.all.min.js，在加载ueditor.config.js之后仍需要重新加载ueditor.all.min.js，所以必须确保ueditor.config.js已加载
           this._loadConfig().then(() => this._loadCore()).then(() => {
-            window.loadEnv.emit('scriptsLoaded')
             resolve()
+            window.loadEnv.emit('scriptsLoaded')
           })
-        })
-      }
+        }
+      })
     },
     _loadConfig () {
       return new Promise((resolve, reject) => {
-        if (!!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
+        if (window.UE && window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
           resolve()
           return
         }
@@ -137,17 +138,17 @@ export default {
         configScript.src = this.mixedConfig.UEDITOR_HOME_URL + 'ueditor.config.js'
         document.getElementsByTagName('head')[0].appendChild(configScript)
         configScript.onload = function () {
-          if (!!window.UE && !!window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
+          if (window.UE && window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0) {
             resolve()
           } else {
-            console && console.error('加载ueditor.config.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
+            console.error('加载ueditor.config.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!\n', configScript.src)
           }
         }
       })
     },
     _loadCore () {
       return new Promise((resolve, reject) => {
-        if (!!window.UE && !!window.UE.getEditor) {
+        if (window.UE && window.UE.getEditor) {
           resolve()
           return
         }
@@ -156,21 +157,17 @@ export default {
         coreScript.src = this.mixedConfig.UEDITOR_HOME_URL + 'ueditor.all.min.js'
         document.getElementsByTagName('head')[0].appendChild(coreScript)
         coreScript.onload = function () {
-          if (!!window.UE && !!window.UE.getEditor) {
+          if (window.UE && window.UE.getEditor) {
             resolve()
           } else {
-            console && console.error('加载ueditor.all.min.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!')
+            console.error('加载ueditor.all.min.js失败,请检查您的配置地址UEDITOR_HOME_URL填写是否正确!\n', coreScript.src)
           }
         }
       })
     },
     // 设置内容
     _setContent (value) {
-      if (this.isReady) {
-        value === this.editor.getContent() || this.editor.setContent(value)
-      } else {
-        this.readyValue = value
-      }
+      value === this.editor.getContent() || this.editor.setContent(value)
     }
   },
   beforeDestroy () {
@@ -180,7 +177,22 @@ export default {
   watch: {
     value: {
       handler (value) {
-        this.editor ? this._setContent(value) : this._beforeInitEditor(value)
+        // 0: 尚未初始化 1: 开始初始化但尚未ready 2 初始化完成并已ready
+        switch (this.status) {
+          case 0:
+            this.status = 1
+            this.initValue = value
+            this._checkDependencies().then(() => this._initEditor())
+            break
+          case 1:
+            this.initValue = value
+            break
+          case 2:
+            this._setContent(value)
+            break
+          default:
+            break
+        }
       },
       immediate: true
     }
