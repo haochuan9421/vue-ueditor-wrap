@@ -214,8 +214,7 @@ yarn add vue-ueditor-wrap
 
 > 代码修改请遵循指定的 `ESLint` 规则，`PR` 之前请先执行 `npm run lint` 进行代码风格检测，大部分语法细节可以通过 `npm run fix` 修正，构建之后，记得修改 `package.json` 里的版本号，方便我 `Review` 通过后麻溜溜的发布到 `npm`。
 
-<img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/alipay.png" height="250"/>
-<img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/wxpay.png" height="250"/>
+<img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/alipay.png" height="250"/><img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/wxpay.png" height="250"/>
 
 ## License
 

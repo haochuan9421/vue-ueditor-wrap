@@ -1,7 +1,7 @@
 .DS_Store
 assets/
 node_modules/
-static/
+public/
 .babelrc
 .eslintignore
 .eslintrc.js
