@@ -1,0 +1,20 @@
+.DS_Store
+assets/
+node_modules/
+static/
+.babelrc
+.eslintignore
+.eslintrc.js
+build.js
+index.html
+webpack*
+npm-debug.log*
+yarn*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

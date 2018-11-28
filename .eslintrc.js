@@ -24,12 +24,6 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    // 未使用的变量
-    'no-unused-vars': 'off',
-    // tab键提示
-    'no-tabs': 'off',
-    // 没有意义的表达式
-    'no-unused-expressions': 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
 }
