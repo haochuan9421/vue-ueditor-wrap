@@ -1,6 +1,6 @@
 .DS_Store
 assets/
-node_modules/
+node_modules*
 public/
 .babelrc
 .eslintignore
