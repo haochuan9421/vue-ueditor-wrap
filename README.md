@@ -77,8 +77,6 @@ yarn add vue-ueditor-wrap
 	  },
 	```
 
-    > 至此你已经可以在页面中看到一个初始化之后的`UEditor`了，并且它已经成功和数据绑定了！👏👏👏
-
 5. 根据项目需求修改配置，完整配置选项查看 ueditor.config.js 源码或 [官方文档](http://fex.baidu.com/ueditor/)
 
     ```html
@@ -104,6 +102,8 @@ yarn add vue-ueditor-wrap
 	    }
 	  },
 	```
+> 至此你已经可以在页面中看到一个初始化之后的`UEditor`了，并且它已经成功和数据绑定了！👏👏👏
+
 ## Advanced
 
 1. 如何获取 `UEditor` 实例？
@@ -142,7 +142,8 @@ yarn add vue-ueditor-wrap
 	      this.$refs.editor.registerButton({
 	        name: 'test',
 	        icon: '/static/test-button.png',
-	        tip: 'this is a test tip',
+					tip: 'this is a test tip',
+					index: 0,
 	        handler: (editor, name) => {
 	          editor.execCommand('inserthtml', `<span>text inserted by test button</span>`)
 	        }
@@ -153,7 +154,7 @@ yarn add vue-ueditor-wrap
 	</script>
 	```
 
-    > 参数： `name` 按钮名称、`icon` 按钮图标、`tip` 按钮 hover 时显示的提示文、`handler` 以 editor 和 name 为入参的按钮动作函数。
+    > 参数： `name` 按钮名称、`icon` 按钮图标、`tip` 按钮 hover 时显示的提示文、`index` 自定义按钮在工具栏的位置索引、`handler` 以 editor 和 name 为入参的按钮动作函数。
 
 ## Features
 

@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     // 添加自定义按钮
-    registerButton: ({ name, icon, tip, handler, UE = window.UE }) => {
+    registerButton: ({ name, icon, tip, handler, index, UE = window.UE }) => {
       UE.registerUI(name, (editor, name) => {
         editor.registerCommand(name, {
           execCommand: () => {
@@ -78,7 +78,7 @@ export default {
           }
         })
         return btn
-      })
+      }, index)
     },
     // 实例化编辑器
     _initEditor () {
