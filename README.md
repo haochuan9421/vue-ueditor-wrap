@@ -142,8 +142,8 @@ yarn add vue-ueditor-wrap
 	      this.$refs.editor.registerButton({
 	        name: 'test',
 	        icon: '/static/test-button.png',
-					tip: 'this is a test tip',
-					index: 0,
+		tip: 'this is a test tip',
+		index: 0,
 	        handler: (editor, name) => {
 	          editor.execCommand('inserthtml', `<span>text inserted by test button</span>`)
 	        }
