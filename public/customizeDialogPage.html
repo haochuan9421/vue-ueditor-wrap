@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <!--页面中一定要引入internal.js为了能直接使用当前打开dialog的实例变量-->
+  <!--internal.js默认是放到 UEditor/dialogs 目录下的-->
+  <script type="text/javascript" src="./UEditor/dialogs/internal.js"></script>
+</head>
+
+<body>
+  <h1>hello vue-ueditor-wrap</h1>
+  <script>
+    //可以直接使用以下全局变量
+    //当前打开dialog的实例变量
+    console.log('editor: ' + editor);
+    //一些常用工具
+    console.log('domUtils: ' + domUtils);
+    console.log('utils: ' + utils);
+    console.log('browser: ' + browser);
+    dialog.onok = function() {
+      editor.execCommand('inserthtml', '<span>我点击了确定</span>');
+    };
+    dialog.oncancel = function() {
+      editor.execCommand('inserthtml', '<span>我点击了取消</span>');
+    };
+  </script>
+</body>
+
+</html>

@@ -14,7 +14,8 @@ export default {
       status: 0,
       initValue: '',
       defaultConfig: {
-        UEDITOR_HOME_URL: '/static/UEditor/',
+        // VUE CLI 3 会添加 process.env.BASE_URL 的环境变量，而 VUE CLI 2 没有，所以借此设置 UEDITOR_HOME_URL，能涵盖大部分 Vue 开发者的使用场景
+        UEDITOR_HOME_URL: process.env.BASE_URL ? process.env.BASE_URL + 'UEditor/' : '/static/UEditor/',
         enableAutoSave: false
       }
     }
@@ -51,8 +52,8 @@ export default {
     }
   },
   methods: {
-    // 添加自定义按钮
-    registerButton: ({ name, icon, tip, handler, index, UE = window.UE }) => {
+    // 添加自定义按钮（自定义按钮，自定义弹窗等操作从 2.2.0 版本开始不再考虑直接集成，这会使得组件和 UEditor 过度耦合，但为了兼容一些老版用户的写法，这个方法依然保留）
+    registerButton ({ name, icon, tip, handler, index, UE = window.UE }) {
       UE.registerUI(name, (editor, name) => {
         editor.registerCommand(name, {
           execCommand: () => {
@@ -78,12 +79,13 @@ export default {
           }
         })
         return btn
-      }, index)
+      }, index, this.id)
     },
     // 实例化编辑器
     _initEditor () {
       this.$nextTick(() => {
         this.init()
+        this.$emit('beforeInit', this.id, this.mixedConfig)
         this.editor = window.UE.getEditor(this.id, this.mixedConfig)
         this.editor.addListener('ready', () => {
           this.status = 2

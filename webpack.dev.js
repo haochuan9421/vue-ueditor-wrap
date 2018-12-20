@@ -15,6 +15,7 @@ const webpackConfig = {
     clientLogLevel: 'error', // 浏览器控制台安静
     disableHostCheck: true
   },
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       {
