@@ -1,31 +1,17 @@
-// 防抖函数
-export default function (func, wait, immediate) {
-  let timeout, args, context, timestamp, result
-
-  let later = function () {
-    let last = Date.now() - timestamp
-    if (last < wait && last >= 0) {
-      // 间隔太小，频率过多，继续延迟
-      timeout = setTimeout(later, wait - last)
-    } else {
-      timeout = null // 间隔够长，运行函数
-      if (!immediate) {
-        result = func.apply(context, args)
-        if (!timeout) context = args = null
-      }
-    }
+/**
+ * 一个简单的函数防抖
+ * @param {Function} fun 需要限制执行频率的函数
+ * @param {Number} delay 延迟时间，这段时间过后，才可触发第二次
+ */
+export default function (fun, delay) {
+  var timer = null
+  var debounced = function () {
+    var ctx = this
+    var args = arguments
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(function () {
+      fun.apply(ctx, args)
+    }, delay)
   }
-
-  return function (..._args) {
-    context = this
-    args = _args
-    timestamp = Date.now()
-    let callNow = immediate && !timeout
-    if (!timeout) timeout = setTimeout(later, wait)
-    if (callNow) {
-      result = func.apply(context, args)
-      context = args = null
-    }
-    return result
-  }
+  return debounced
 }

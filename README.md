@@ -121,8 +121,30 @@ yarn add vue-ueditor-wrap
     ```html
     <vue-ueditor-wrap :destroy="true"></vue-ueditor-wrap>
     ```
+3. 选取 `v-model` 的实现方式。双向绑定的实现依赖对编辑器内容变化的监听，由于监听方式的不同，会带来监听效果的差异性，你可以自行选择，但建议使用开箱即用的默认值。
 
-3. 如何进行二次开发（添加自定义按钮、弹窗等）？
+    ```html
+    <vue-ueditor-wrap mode="listener"></vue-ueditor-wrap>
+    ```
+    可选值：`observer`，`listener`
+    
+    默认值：`observer`
+    
+    参数说明：
+    1. `observer` 模式借助 [MutationObserver API](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)。优点在于监听的准确性，缺点在于它会带来一点额外的性能开销。你可以通过 `observerDebounceTime` 属性设置触发间隔，还可以通过 `observerOptions` 属性有选择的设置 [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit) 的监听行为。该 API 只兼容到 IE11+，但 `vue-ueditor-wrap` 会在不支持的浏览器中自动启用 `listener` 模式。
+    
+        ```html
+        <vue-ueditor-wrap
+          mode="observer"
+          :observerDebounceTime="100"
+          :observerOptions="{ attributes: true, characterData: true, childList: true, subtree: true }"
+          >
+        </vue-ueditor-wrap>
+        ```
+    
+    2. `listener` 模式借助 UEditor 的 [contentChange 事件](https://ueditor.baidu.com/doc/#UE.Editor:contentChange)，优点在于依赖官方提供的事件 API，无需额外的性能消耗，兼容性更好，但缺点在于监听的准确性并不高，存在如下方 [常见问题 5] 中的提到的 BUG。
+
+4. 如何进行二次开发（添加自定义按钮、弹窗等）？
 
 	本组件提供了 `beforeInit` 钩子，它会在 `UEditor` 的 scripts 加载完毕之后、编辑器初始化之前触发，你可以在此时机，通过操作 window.UE 对象，来进行诸如添加自定义按钮、弹窗等的二次开发。`beforeInit` 的触发函数以 编辑器 id 和 配置参数 作为入参。下面提供了一个简单的自定义按钮和自定义弹窗的示例，[DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo) 仓库中也提供了自定义“表格居中”按钮的示例，如果有更多二次开发的需求，你可以参考[官方 API](https://ueditor.baidu.com/doc/) 或者 [UEditor 源码](https://github.com/HaoChuan9421/ueditor/tree/dev-1.4.3.3/_examples) 中的示例。
   
@@ -324,7 +346,7 @@ yarn add vue-ueditor-wrap
 
 5. 为什么我输入的`"? ! $ #"` 这些特殊字符，没有成功绑定？
 
-    那时因为 `v-model` 的实现基于对 `UEditor` 实例上 `contentChange` 事件的监听，由于你输入这些特殊字符时通常是按住 `shift` 键的，`UEditor` 本身的 `contentChange` 在 `shift` 键按住时不会触发，你也可以尝试同时按下多个键，你会发现 `contentChange` 只触发一次。所有我也很无奈呀！请移步 [UEditor](https://github.com/fex-team/ueditor)。
+    当你使用 `listener` 模式时，由于 `v-model` 的实现是基于对 `UEditor` 实例上 `contentChange` 事件的监听，而你输入这些特殊字符时通常是按住 `shift` 键的，`UEditor` 本身的 `contentChange` 在 `shift` 键按住时不会触发，你也可以尝试同时按下多个键，你会发现 `contentChange` 只触发一次。你可以使用 `observer` 模式或移步 [UEditor](https://github.com/fex-team/ueditor)。
 
 6. 单图片上传后 `v-model` 绑定的是 `loading` 小图标。
 

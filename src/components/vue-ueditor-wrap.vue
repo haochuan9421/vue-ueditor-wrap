@@ -10,7 +10,7 @@ export default {
   name: 'VueUeditorWrap',
   data () {
     return {
-      id: 'editor' + Math.random().toString().slice(-10),
+      id: 'editor_' + Math.random().toString(16).slice(-6),
       editor: null,
       status: 0,
       initValue: '',
@@ -22,6 +22,16 @@ export default {
     }
   },
   props: {
+    // v-model 实现方式
+    mode: {
+      type: String,
+      default: 'observer',
+      validator: function (value) {
+        // 1. observer 借助 MutationObserver API https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver
+        // 2. listener 借助 UEditor 的 contentChange 事件 https://ueditor.baidu.com/doc/#UE.Editor:contentChange
+        return ['observer', 'listener'].indexOf(value) !== -1
+      }
+    },
     value: {
       type: String,
       default: ''
@@ -46,13 +56,25 @@ export default {
       type: String,
       default: ''
     },
-    enableObserverListener: {
-      type: Boolean,
-      default: false
-    },
     observerDebounceTime: {
       type: Number,
-      default: 50
+      default: 50,
+      validator: function (value) {
+        return value >= 20
+      }
+    },
+    observerOptions: {
+      type: Object,
+      default: function () {
+        // https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit
+        return {
+          attributes: true, // 是否监听 DOM 元素的属性变化
+          attributeFilter: ['src', 'style', 'type', 'name'], // 只有在该数组中的属性值的变化才会监听
+          characterData: true, // 是否监听文本节点
+          childList: true, // 是否监听子节点
+          subtree: true // 是否监听后代元素
+        }
+      }
     }
   },
   computed: {
@@ -92,21 +114,18 @@ export default {
     },
     // 实例化编辑器
     _initEditor () {
-      this.$nextTick(() => {
-        this.init()
-        this.$emit('beforeInit', this.id, this.mixedConfig)
-        this.editor = window.UE.getEditor(this.id, this.mixedConfig)
-        this.editor.addListener('ready', () => {
-          this.status = 2
-          this.editor.setContent(this.initValue)
-          // 按需开启不同的更改侦听器
-          if (this.enableObserverListener && MutationObserver) {
-            this._observerChangeListener()
-          } else {
-            this._normalChangeListener()
-          }
-          this.$emit('ready', this.editor)
-        })
+      this.init()
+      this.$emit('beforeInit', this.id, this.mixedConfig)
+      this.editor = window.UE.getEditor(this.id, this.mixedConfig)
+      this.editor.addListener('ready', () => {
+        this.status = 2
+        this.$emit('ready', this.editor)
+        this.editor.setContent(this.initValue)
+        if (this.mode === 'observer' && window.MutationObserver) {
+          this._observerChangeListener()
+        } else {
+          this._normalChangeListener()
+        }
       })
     },
     // 检测依赖,确保 UEditor 资源文件已加载完毕
@@ -172,26 +191,32 @@ export default {
     _setContent (value) {
       value === this.editor.getContent() || this.editor.setContent(value)
     },
-    // 基于Ueditor的监听
+    // 基于 UEditor 的 contentChange 事件
     _normalChangeListener () {
       this.editor.addListener('contentChange', () => {
         this.$emit('input', this.editor.getContent())
       })
     },
-    // 基于Observer的监听
+    // 基于 MutationObserver API
     _observerChangeListener () {
-      const editorWrap = document.querySelector(`#${this.id}`)
-      const changeHandle = () => {
+      const changeHandle = (mutationsList) => {
+        if (this.editor.document.getElementById('baidu_pastebin')) {
+          return
+        }
         this.$emit('input', this.editor.getContent())
       }
-      // 利用函数防抖
-      this.observer = new MutationObserver(Debounce(changeHandle, this.observerDebounceTime, false))
-      this.observer.observe(editorWrap, { attributes: true, childList: true, subtree: true })
+      // 函数防抖
+      this.observer = new MutationObserver(Debounce(changeHandle, this.observerDebounceTime))
+      this.observer.observe(this.editor.body, this.observerOptions)
     }
   },
   beforeDestroy () {
-    if (this.destroy && this.editor && this.editor.destroy) this.editor.destroy()
-    this.observer && this.observer.disconnect && this.observer.disconnect()
+    if (this.destroy && this.editor && this.editor.destroy) {
+      this.editor.destroy()
+    }
+    if (this.observer && this.observer.disconnect) {
+      this.observer.disconnect()
+    }
   },
   // v-model语法糖实现
   watch: {
@@ -202,7 +227,9 @@ export default {
           case 0:
             this.status = 1
             this.initValue = value
-            this._checkDependencies().then(() => this._initEditor())
+            this._checkDependencies().then(() => {
+              document.getElementById(this.id) ? this._initEditor() : this.$nextTick(() => this._initEditor())
+            })
             break
           case 1:
             this.initValue = value
