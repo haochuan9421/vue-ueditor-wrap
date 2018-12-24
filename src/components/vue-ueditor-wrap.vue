@@ -4,6 +4,7 @@
 
 <script>
 import LoadEvent from '../utils/Event.js'
+import Debounce from '../utils/Debounce.js'
 
 export default {
   name: 'VueUeditorWrap',
@@ -44,6 +45,14 @@ export default {
     name: {
       type: String,
       default: ''
+    },
+    enableObserverListener: {
+      type: Boolean,
+      default: false
+    },
+    observerDebounceTime: {
+      type: Number,
+      default: 50
     }
   },
   computed: {
@@ -90,10 +99,13 @@ export default {
         this.editor.addListener('ready', () => {
           this.status = 2
           this.editor.setContent(this.initValue)
+          // 按需开启不同的更改侦听器
+          if (this.enableObserverListener && MutationObserver) {
+            this._observerChangeListener()
+          } else {
+            this._normalChangeListener()
+          }
           this.$emit('ready', this.editor)
-          this.editor.addListener('contentChange', () => {
-            this.$emit('input', this.editor.getContent())
-          })
         })
       })
     },
@@ -159,10 +171,27 @@ export default {
     // 设置内容
     _setContent (value) {
       value === this.editor.getContent() || this.editor.setContent(value)
+    },
+    // 基于Ueditor的监听
+    _normalChangeListener () {
+      this.editor.addListener('contentChange', () => {
+        this.$emit('input', this.editor.getContent())
+      })
+    },
+    // 基于Observer的监听
+    _observerChangeListener () {
+      const editorWrap = document.querySelector(`#${this.id}`)
+      const changeHandle = () => {
+        this.$emit('input', this.editor.getContent())
+      }
+      // 利用函数防抖
+      this.observer = new MutationObserver(Debounce(changeHandle, this.observerDebounceTime, false))
+      this.observer.observe(editorWrap, { attributes: true, childList: true, subtree: true })
     }
   },
   beforeDestroy () {
     if (this.destroy && this.editor && this.editor.destroy) this.editor.destroy()
+    this.observer && this.observer.disconnect && this.observer.disconnect()
   },
   // v-model语法糖实现
   watch: {
