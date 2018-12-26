@@ -12,6 +12,7 @@ npm-debug.log*
 yarn*
 
 # Editor directories and files
+.github
 .idea
 .vscode
 *.suo
