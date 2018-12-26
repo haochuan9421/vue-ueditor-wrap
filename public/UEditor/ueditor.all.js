@@ -1,7 +1,7 @@
 /*!
  * UEditor
  * version: ueditor
- * build: Wed Dec 26 2018 14:32:53 GMT+0800 (CST)
+ * build: Wed Dec 26 2018 17:25:05 GMT+0800 (CST)
  */
 
 (function(){
@@ -17653,7 +17653,7 @@ UE.plugins['video'] = function (){
 
         url = utils.unhtmlForUrl(url);
         align = utils.unhtml(align);
-        classname = utils.unhtml(classname);
+        classname = utils.unhtml(classname).trim();
 
         width = parseInt(width, 10) || 0;
         height = parseInt(height, 10) || 0;
