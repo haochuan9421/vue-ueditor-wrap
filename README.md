@@ -24,7 +24,10 @@ npm i vue-ueditor-wrap
 yarn add vue-ueditor-wrap
 ```
 
-## Quick Start（基于 vue-cli 2.x 的[完整DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo)）
+## Quick Start
+
+> [基于 vue-cli 2.x 的完整 DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo)<br/>[基于 Nuxt 的服务端渲染 DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-nuxt)。
+
 
 1. ~~下载 [UEditor](http://ueditor.baidu.com/website/download.html)~~
 
@@ -143,8 +146,11 @@ yarn add vue-ueditor-wrap
         ```
     
     2. `listener` 模式借助 UEditor 的 [contentChange 事件](https://ueditor.baidu.com/doc/#UE.Editor:contentChange)，优点在于依赖官方提供的事件 API，无需额外的性能消耗，兼容性更好，但缺点在于监听的准确性并不高，存在如下方 [常见问题 5] 中的提到的 BUG。
+4. 是否支持 `Vue SSR`？
 
-4. 如何进行二次开发（添加自定义按钮、弹窗等）？
+    自 `2.4.0` 版本开始支持服务端渲染！本组件提供对 `Nuxt` 项目开箱即用的支持。但如果你是自己搭建的 `Vue SSR` 项目，你可能需要自行区分服务端和客户端环境并结合 `forceInit` 属性强制初始化编辑器，但大概率你用不到该属性，即使是自己搭建的 SSR 项目，更多问题欢迎提交 ISSUE。
+
+5. 如何进行二次开发（添加自定义按钮、弹窗等）？
 
 	本组件提供了 `beforeInit` 钩子，它会在 `UEditor` 的 scripts 加载完毕之后、编辑器初始化之前触发，你可以在此时机，通过操作 window.UE 对象，来进行诸如添加自定义按钮、弹窗等的二次开发。`beforeInit` 的触发函数以 编辑器 id 和 配置参数 作为入参。下面提供了一个简单的自定义按钮和自定义弹窗的示例，[DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo) 仓库中也提供了自定义“表格居中”按钮的示例，如果有更多二次开发的需求，你可以参考[官方 API](https://ueditor.baidu.com/doc/) 或者 [UEditor 源码](https://github.com/HaoChuan9421/ueditor/tree/dev-1.4.3.3/_examples) 中的示例。
   

@@ -4,14 +4,14 @@
  * @param {Number} delay 延迟时间，这段时间过后，才可触发第二次
  */
 export default function (fun, delay) {
-  var timer = null
+  var timer = null;
   var debounced = function () {
-    var ctx = this
-    var args = arguments
-    if (timer) clearTimeout(timer)
+    var ctx = this;
+    var args = arguments;
+    if (timer) clearTimeout(timer);
     timer = setTimeout(function () {
-      fun.apply(ctx, args)
-    }, delay)
-  }
-  return debounced
+      fun.apply(ctx, args);
+    }, delay);
+  };
+  return debounced;
 }
