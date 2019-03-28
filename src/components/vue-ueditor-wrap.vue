@@ -1,5 +1,7 @@
 <template>
-  <script ref="script" :name="name" type="text/plain"></script>
+  <div>
+    <script ref="script" :name="name" type="text/plain"></script>
+  </div>
 </template>
 
 <script>
@@ -10,7 +12,6 @@ export default {
   name: 'VueUeditorWrap',
   data () {
     return {
-      editor: null,
       status: 0,
       initValue: '',
       defaultConfig: {
@@ -123,9 +124,13 @@ export default {
       this.$emit('beforeInit', this.id, this.mixedConfig);
       this.editor = window.UE.getEditor(this.id, this.mixedConfig);
       this.editor.addListener('ready', () => {
-        this.status = 2;
-        this.$emit('ready', this.editor);
-        this.editor.setContent(this.initValue);
+        if (this.status === 2) { // 使用 keep-alive 组件会出现这种情况
+          this.editor.setContent(this.value);
+        } else {
+          this.status = 2;
+          this.$emit('ready', this.editor);
+          this.editor.setContent(this.initValue);
+        }
         if (this.mode === 'observer' && window.MutationObserver) {
           this._observerChangeListener();
         } else {
@@ -196,11 +201,12 @@ export default {
     _setContent (value) {
       value === this.editor.getContent() || this.editor.setContent(value);
     },
+    contentChangeHandler () {
+      this.$emit('input', this.editor.getContent());
+    },
     // 基于 UEditor 的 contentChange 事件
     _normalChangeListener () {
-      this.editor.addListener('contentChange', () => {
-        this.$emit('input', this.editor.getContent());
-      });
+      this.editor.addListener('contentChange', this.contentChangeHandler);
     },
     // 基于 MutationObserver API
     _observerChangeListener () {
@@ -214,6 +220,10 @@ export default {
       this.observer = new MutationObserver(Debounce(changeHandle, this.observerDebounceTime));
       this.observer.observe(this.editor.body, this.observerOptions);
     }
+  },
+  deactivated () {
+    this.editor && this.editor.removeListener('contentChange', this.contentChangeHandler);
+    this.observer && this.observer.disconnect();
   },
   beforeDestroy () {
     if (this.destroy && this.editor && this.editor.destroy) {
