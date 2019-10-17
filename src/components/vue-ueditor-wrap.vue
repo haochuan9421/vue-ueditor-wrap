@@ -237,6 +237,10 @@ export default {
   watch: {
     value: {
       handler (value) {
+        //修复值为空无法双向绑定的问题
+        if(value===null){
+          value = ""
+        }
         // 0: 尚未初始化 1: 开始初始化但尚未ready 2 初始化完成并已ready
         switch (this.status) {
           case 0:
