@@ -874,6 +874,7 @@
                             size: this.listSize
                         }, editor.queryCommandValue('serverparam')),
                     'method': 'get',
+                    'headers': editor.options.headers,
                     'onsuccess': function (r) {
                         try {
                             var json = isJsonp ? r:eval('(' + r.responseText + ')');
