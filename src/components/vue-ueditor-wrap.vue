@@ -129,7 +129,10 @@ export default {
         } else {
           this.status = 2;
           this.$emit('ready', this.editor);
-          this.editor.setContent(this.initValue);
+          if(this.initValue){
+            this.editor.setContent(this.initValue);
+          }
+          
         }
         if (this.mode === 'observer' && window.MutationObserver) {
           this._observerChangeListener();
