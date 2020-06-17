@@ -152,13 +152,13 @@ yarn add vue-ueditor-wrap
 
 5. 如何进行二次开发（添加自定义按钮、弹窗等）？
 
-	本组件提供了 `beforeInit` 钩子，它会在 `UEditor` 的 scripts 加载完毕之后、编辑器初始化之前触发，你可以在此时机，通过操作 window.UE 对象，来进行诸如添加自定义按钮、弹窗等的二次开发。`beforeInit` 的触发函数以 编辑器 id 和 配置参数 作为入参。下面提供了一个简单的自定义按钮和自定义弹窗的示例，[DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo) 仓库中也提供了自定义“表格居中”按钮的示例，如果有更多二次开发的需求，你可以参考[官方 API](https://ueditor.baidu.com/doc/) 或者 [UEditor 源码](https://github.com/HaoChuan9421/ueditor/tree/dev-1.4.3.3/_examples) 中的示例。
+	本组件提供了 `before-init` 钩子，它会在 `UEditor` 的 scripts 加载完毕之后、编辑器初始化之前触发，你可以在此时机，通过操作 window.UE 对象，来进行诸如添加自定义按钮、弹窗等的二次开发。`before-init` 的触发函数以 编辑器 id 和 配置参数 作为入参。下面提供了一个简单的自定义按钮和自定义弹窗的示例，[DEMO](https://github.com/HaoChuan9421/vue-ueditor-wrap-demo) 仓库中也提供了自定义“表格居中”按钮的示例，如果有更多二次开发的需求，你可以参考[官方 API](https://ueditor.baidu.com/doc/) 或者 [UEditor 源码](https://github.com/HaoChuan9421/ueditor/tree/dev-1.4.3.3/_examples) 中的示例。
   
 	<details>
 	  <summary>自定义按钮 Demo</summary>
 	  
 	```html
-	<vue-ueditor-wrap v-model="msg" @beforeInit="addCustomButtom"></vue-ueditor-wrap>
+	<vue-ueditor-wrap v-model="msg" @before-init="addCustomButtom"></vue-ueditor-wrap>
 	```
 	  
 	```js
@@ -209,7 +209,7 @@ yarn add vue-ueditor-wrap
 	  <summary>自定义弹窗 Demo</summary>
 	  
 	```html
-	<vue-ueditor-wrap v-model="msg" @beforeInit="addCustomDialog"></vue-ueditor-wrap>
+	<vue-ueditor-wrap v-model="msg" @before-init="addCustomDialog"></vue-ueditor-wrap>
 	```
 	  
 	```js
@@ -358,11 +358,9 @@ yarn add vue-ueditor-wrap
 
 	这个也是 `UEditor` 的 `BUG`。我最新编辑的版本，修复了官方的这个 `BUG`，如果你使用的是官网下载的资源文件，请替换资源文件或参考 [Issue1](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/1)。
 
-> 更多问题，欢迎提交 [ISSUE](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues) 或者去 [聊天室](https://gitter.im/haochuan9421/vue-ueditor-wrap/) 提问。但由于这是一个个人维护的项目，我平时也有自己的工作，所以并不能保证及时解决你们的所有问题，如果小伙伴们有好的建议或更炫酷的操作，也欢迎 `PR`，如果你觉得这个组件给你的开发带来了实实在在的方便，也非常感谢你的`Star`，当然还有咖啡：
+> 更多问题，欢迎提交 [ISSUE](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues) 或者去 [聊天室](https://gitter.im/haochuan9421/vue-ueditor-wrap/) 提问。但由于这是一个个人维护的项目，我平时也有自己的工作，所以并不能保证及时解决你们的所有问题，如果小伙伴们有好的建议或更炫酷的操作，也欢迎 `PR`。
 
 > 代码修改请遵循指定的 `ESLint` 规则，`PR` 之前请先执行 `npm run lint` 进行代码风格检测，大部分语法细节可以通过 `npm run fix` 修正，构建之后，记得修改 `package.json` 里的版本号，方便我 `Review` 通过后麻溜溜的发布到 `npm`。
-
-<img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/alipay.png" height="250"/><img src="https://github.com/HaoChuan9421/vue-ueditor-wrap/raw/master/assets/images/wxpay.png" height="250"/>
 
 ## License
 

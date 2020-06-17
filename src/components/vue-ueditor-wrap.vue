@@ -121,7 +121,8 @@ export default {
     _initEditor () {
       this.$refs.script.id = this.id = 'editor_' + Math.random().toString(16).slice(-6); // 这么做是为了支持 Vue SSR，因为如果把 id 属性放在 data 里会导致服务端和客户端分别计算该属性的值，而造成 id 不匹配无法初始化的 BUG
       this.init();
-      this.$emit('beforeInit', this.id, this.mixedConfig);
+      this.$emit('before-init', this.id, this.mixedConfig);
+      this.$emit('beforeInit', this.id, this.mixedConfig); // 虽然这个驼峰的写法会导致使用 DOM 模版时出现监听事件自动转小写的 BUG，但如果经过编译的话并不会有这个问题，为了兼容历史版本，不做删除，参考 https://vuejs.org/v2/guide/components-custom-events.html#Event-Names
       this.editor = window.UE.getEditor(this.id, this.mixedConfig);
       this.editor.addListener('ready', () => {
         if (this.status === 2) { // 使用 keep-alive 组件会出现这种情况
@@ -129,10 +130,9 @@ export default {
         } else {
           this.status = 2;
           this.$emit('ready', this.editor);
-          if(this.initValue){
+          if (this.initValue) {
             this.editor.setContent(this.initValue);
           }
-          
         }
         if (this.mode === 'observer' && window.MutationObserver) {
           this._observerChangeListener();
@@ -240,9 +240,9 @@ export default {
   watch: {
     value: {
       handler (value) {
-        //修复值为空无法双向绑定的问题
-        if(value===null){
-          value = ""
+        // 修复值为空无法双向绑定的问题
+        if (value === null) {
+          value = '';
         }
         // 0: 尚未初始化 1: 开始初始化但尚未ready 2 初始化完成并已ready
         switch (this.status) {

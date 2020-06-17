@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="preview" v-html="msg"></div>
-    <vue-ueditor-wrap v-model="msg" :config="myConfig" @beforeInit="addCustomButtom" :key="1"></vue-ueditor-wrap>
-    <vue-ueditor-wrap v-model="msg" :config="myConfig" @beforeInit="addCustomDialog" :key="2"></vue-ueditor-wrap>
+    <vue-ueditor-wrap v-model="msg" :config="myConfig" @before-init="addCustomButtom" :key="1"></vue-ueditor-wrap>
+    <vue-ueditor-wrap v-model="msg" :config="myConfig" @before-init="addCustomDialog" :key="2"></vue-ueditor-wrap>
   </div>
 </template>
 
