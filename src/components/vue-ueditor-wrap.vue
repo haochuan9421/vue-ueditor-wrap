@@ -16,8 +16,7 @@ export default {
       initValue: '',
       defaultConfig: {
         // VUE CLI 3 会添加 process.env.BASE_URL 的环境变量，而 VUE CLI 2 没有，所以借此设置 UEDITOR_HOME_URL，能涵盖大部分 Vue 开发者的使用场景
-        UEDITOR_HOME_URL: process.env.BASE_URL ? process.env.BASE_URL + 'UEditor/' : '/static/UEditor/',
-        enableAutoSave: false
+        UEDITOR_HOME_URL: process.env.BASE_URL ? process.env.BASE_URL + 'UEditor/' : '/static/UEditor/'
       }
     };
   },
@@ -80,6 +79,10 @@ export default {
     forceInit: {
       type: Boolean,
       default: false
+    },
+    // 手动设置 UEditor ID
+    editorId: {
+      type: String
     }
   },
   computed: {
@@ -119,7 +122,7 @@ export default {
     },
     // 实例化编辑器
     _initEditor () {
-      this.$refs.script.id = this.id = 'editor_' + Math.random().toString(16).slice(-6); // 这么做是为了支持 Vue SSR，因为如果把 id 属性放在 data 里会导致服务端和客户端分别计算该属性的值，而造成 id 不匹配无法初始化的 BUG
+      this.$refs.script.id = this.id = this.editorId || 'editor_' + Math.random().toString(16).slice(-6); // 这么做是为了支持 Vue SSR，因为如果把 id 属性放在 data 里会导致服务端和客户端分别计算该属性的值，而造成 id 不匹配无法初始化的 BUG
       this.init();
       this.$emit('before-init', this.id, this.mixedConfig);
       this.$emit('beforeInit', this.id, this.mixedConfig); // 虽然这个驼峰的写法会导致使用 DOM 模版时出现监听事件自动转小写的 BUG，但如果经过编译的话并不会有这个问题，为了兼容历史版本，不做删除，参考 https://vuejs.org/v2/guide/components-custom-events.html#Event-Names

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="preview" v-html="msg"></div>
-    <vue-ueditor-wrap v-model="msg" :config="myConfig" @before-init="addCustomButtom" :key="1"></vue-ueditor-wrap>
-    <vue-ueditor-wrap v-model="msg" :config="myConfig" @before-init="addCustomDialog" :key="2"></vue-ueditor-wrap>
+    <vue-ueditor-wrap v-model="msg" :config="myConfig" @before-init="addCustomButtom" :key="1" editor-id="editor_one"></vue-ueditor-wrap>
+    <vue-ueditor-wrap v-model="msg" :config="myConfig" @before-init="addCustomDialog" :key="2" editorId="editor-two"></vue-ueditor-wrap>
   </div>
 </template>
 
@@ -27,7 +27,8 @@ export default {
         initialFrameHeight: 200,
         initialFrameWidth: '100%',
         UEDITOR_HOME_URL: '/UEditor/',
-        serverUrl: 'http://35.201.165.105:8000/controller.php'
+        serverUrl: 'http://35.201.165.105:8000/controller.php',
+        enableAutoSave: true // 开启从草稿箱恢复功能需要手动设置固定的 editorId，否则组件会默认随机一个，如果页面刷新，下次渲染的时候 editorId 会重新随机，导致无法加载草稿箱数据
       }
     };
   },
