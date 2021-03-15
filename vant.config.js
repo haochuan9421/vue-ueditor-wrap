@@ -7,6 +7,10 @@ module.exports = {
     site: {
       publicPath: '/vue-ueditor-wrap/',
     },
+    vetur: {
+      test: /\.md/,
+      tagPrefix: '',
+    },
   },
   site: {
     title: 'vue-ueditor-wrap',

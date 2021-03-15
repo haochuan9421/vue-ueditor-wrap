@@ -12,6 +12,8 @@ package-lock.json
 es
 lib
 site
+vetur
+changelog.generated.md
 
 # test
 test/coverage

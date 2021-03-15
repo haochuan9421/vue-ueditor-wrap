@@ -2,11 +2,14 @@
   "name": "vue-ueditor-wrap",
   "version": "3.0.0-beta.0",
   "description": "Vue + UEditor + v-model双向绑定",
-  "main": "lib/index.js",
   "module": "es/index.js",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "style": "lib/index.css",
   "files": [
     "lib",
-    "es"
+    "es",
+    "vetur"
   ],
   "scripts": {
     "dev": "vant-cli dev",
@@ -34,11 +37,18 @@
     "url": "https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"
   },
   "homepage": "https://github.com/HaoChuan9421/vue-ueditor-wrap#readme",
+  "dependencies": {
+    "@babel/runtime": "7.x"
+  },
   "devDependencies": {
     "@vant/cli": "^3.7.0-beta.0",
     "@vue/compiler-sfc": "^3.0.0",
-    "babel-plugin-import": "^1.13.0",
     "copy-webpack-plugin": "6",
+    "lodash": "^4.17.21",
+    "prettier": "^2.2.1",
+    "vue": "^3.0.0"
+  },
+  "peerDependencies": {
     "vue": "^3.0.0"
   },
   "husky": {
@@ -48,27 +58,22 @@
     }
   },
   "lint-staged": {
+    "*.md": "prettier --write",
+    "*.{ts,tsx,js,vue,less}": "prettier --write",
     "*.{ts,tsx,js,jsx,vue}": "eslint --fix",
-    "*.{vue,css,less,scss}": "stylelint --fix"
+    "*.{vue,css,less}": "stylelint --fix"
   },
-  "peerDependencies": {
-    "vue": "^3.0.0"
+  "sideEffects": [
+    "es/**/style/*",
+    "lib/**/style/*",
+    "*.css",
+    "*.less"
+  ],
+  "vetur": {
+    "tags": "vetur/tags.json",
+    "attributes": "vetur/attributes.json"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@vant"
-    ]
-  },
-  "stylelint": {
-    "extends": [
-      "@vant/stylelint-config"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true,
-    "printWidth": 120
-  },
+  "web-types": "vetur/web-types.json",
   "browserslist": [
     "> 1%",
     "last 2 versions",

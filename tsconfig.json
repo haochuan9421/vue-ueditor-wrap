@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "paths": {
+      "@demo/*": ["docs/site/*"]
+    }
+  },
+  "include": ["src/**/*", "types/**/*", "docs/**/*", "test/**/*"]
+}

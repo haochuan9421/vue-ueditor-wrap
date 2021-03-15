@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { get } = require('lodash');
+
 const vantConfig = require('./vant.config');
 
 module.exports = function () {
@@ -21,7 +23,7 @@ module.exports = function () {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-          PUBLIC_PATH: JSON.stringify(vantConfig.build.site.publicPath),
+          PUBLIC_PATH: JSON.stringify(get(vantConfig, 'build.site.publicPath')),
         },
       }),
     ],
