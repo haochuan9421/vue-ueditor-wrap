@@ -3,7 +3,7 @@ import { PropType, CSSProperties, defineComponent } from 'vue';
 export type ButtonType = 'primary' | 'success' | 'warning' | 'danger';
 
 export default defineComponent({
-  name: 'DemoButton',
+  name: 'VueUeditorWrap',
 
   props: {
     text: String,
