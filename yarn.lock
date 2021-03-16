@@ -1862,10 +1862,10 @@
     "@typescript-eslint/types" "4.18.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vant/cli@^3.7.0-beta.0":
-  version "3.7.0-beta.0"
-  resolved "https://registry.npm.taobao.org/@vant/cli/download/@vant/cli-3.7.0-beta.0.tgz#2590310b04d6cbdb3f7ce62fdec32e0640d7022d"
-  integrity sha1-JZAxCwTWy9s/fOYv3sMuBkDXAi0=
+"@vant/cli@^3.7.0-beta.2":
+  version "3.7.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@vant/cli/download/@vant/cli-3.7.0-beta.2.tgz#ed54a7350b678b24c46e7e7da944d737d7d629a2"
+  integrity sha1-7VSnNQtniyTEbn59qUTXN9fWKaI=
   dependencies:
     "@babel/core" "^7.12.10"
     "@babel/plugin-transform-object-assign" "^7.12.1"
@@ -1877,8 +1877,8 @@
     "@nuxt/friendly-errors-webpack-plugin" "^2.5.0"
     "@types/jest" "^26.0.20"
     "@types/webpack-dev-server" "^3.11.1"
-    "@vant/eslint-config" "^3.1.0"
-    "@vant/markdown-loader" "^3.1.0-beta.0"
+    "@vant/eslint-config" "^3.2.0"
+    "@vant/markdown-loader" "^3.1.0-beta.1"
     "@vant/markdown-vetur" "^2.0.2"
     "@vant/stylelint-config" "^1.4.2"
     "@vant/touch-emulator" "^1.2.0"
@@ -1931,10 +1931,10 @@
     webpack-merge "^5.7.3"
     webpackbar "^5.0.0-3"
 
-"@vant/eslint-config@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.npm.taobao.org/@vant/eslint-config/download/@vant/eslint-config-3.1.0.tgz#f5cc4104cd72e2e643975bc229b4222c983ec304"
-  integrity sha1-9cxBBM1y4uZDl1vCKbQiLJg+wwQ=
+"@vant/eslint-config@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/@vant/eslint-config/download/@vant/eslint-config-3.2.0.tgz#8e57941778225e2c6afde92ef573066fa921962e"
+  integrity sha1-jleUF3giXixq/eku9XMGb6khli4=
   dependencies:
     "@typescript-eslint/eslint-plugin" "^4.6.0"
     "@typescript-eslint/parser" "^4.6.0"
@@ -1944,10 +1944,10 @@
     eslint-plugin-markdown "^2.0.0"
     eslint-plugin-vue "^7.1.0"
 
-"@vant/markdown-loader@^3.1.0-beta.0":
-  version "3.1.0-beta.0"
-  resolved "https://registry.npm.taobao.org/@vant/markdown-loader/download/@vant/markdown-loader-3.1.0-beta.0.tgz#30efa5126fd0fbd668c3813161c2f3702b72b870"
-  integrity sha1-MO+lEm/Q+9Zow4ExYcLzcCtyuHA=
+"@vant/markdown-loader@^3.1.0-beta.1":
+  version "3.1.0-beta.1"
+  resolved "https://registry.npm.taobao.org/@vant/markdown-loader/download/@vant/markdown-loader-3.1.0-beta.1.tgz#a1542d2e19666f320c5656f18a22df3ad3da572c"
+  integrity sha1-oVQtLhlmbzIMVlbxiiLfOtPaVyw=
   dependencies:
     front-matter "^4.0.2"
     highlight.js "^10.3.1"
