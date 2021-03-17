@@ -1,4 +1,7 @@
 {
   "root": true,
-  "extends": ["@vant"]
+  "extends": ["@vant"],
+  "rules": {
+    "vue/component-definition-name-casing": ["error", "kebab-case"]
+  }
 }
