@@ -7,12 +7,6 @@ export type EditorDependency = {
   url: string;
 };
 
-enum EDITOR_STATUS {
-  UNREADY,
-  PENDING,
-  READY,
-}
-
 export default defineComponent({
   name: 'vue-ueditor-wrap',
 
@@ -63,81 +57,97 @@ export default defineComponent({
     // 指定 UEditor 依赖的静态资源
     editorDependencies: {
       type: Array as PropType<EditorDependency[]>,
-      default: () => {
-        return [
-          {
-            isFullUrl: false,
-            url: 'ueditor.config.js',
-          },
-          {
-            isFullUrl: false,
-            url: 'ueditor.all.js',
-          },
-        ];
-      },
     },
     // 检测依赖的静态资源是否加载完成的方法
     editorDependenciesReadyChecker: {
       type: Function as PropType<() => boolean>,
-      default: () => {
-        // 判断 ueditor.config.js 和 ueditor.all.js 是否均已加载
-        // 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象存在,但为空对象
-        return (
-          window.UE && window.UE.getEditor && window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0
-        );
-      },
     },
   },
 
   emits: ['update:modelValue', 'before-init', 'ready'],
 
   setup(props, { emit }) {
-    let editorStatus = EDITOR_STATUS.UNREADY;
-    let initValue = '';
+    let isEditorReady = false;
     let editor: any;
     let observer: MutationObserver;
     let container: any = null;
 
     const modelValue = toRef(props, 'modelValue');
 
-    // 动态创建 script 标签来加载 JS 脚本
+    // 创建加载资源的事件通信载体
+    if (!window.$loadEventBus) {
+      window.$loadEventBus = new LoadEvent();
+    }
+
+    // 动态创建 script 标签来加载 JS 脚本，保证同一个脚本只被加载一次
     const loadScript = (link: string) => {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = link;
-        document.getElementsByTagName('head')[0].appendChild(script);
-        script.onload = resolve;
-        script.onerror = reject;
+      return new Promise<void>((resolve, reject) => {
+        if (!window.$loadEventBus.listeners[link]) {
+          // 如果这个资源从未被请求过，就手动创建脚本去加载
+          const script = document.createElement('script');
+          script.src = link;
+          document.getElementsByTagName('head')[0].appendChild(script);
+
+          script.onload = () => {
+            window.$loadEventBus.emit(link);
+          };
+          script.onerror = reject;
+        }
+        window.$loadEventBus.on(link, resolve);
       });
     };
 
     // 加载 UEditor 相关的静态资源
     const loadEditorDependencies = () => {
+      // 默认要加载的资源
+      const defaultEditorDependencies = [
+        {
+          isFullUrl: false,
+          url: 'ueditor.config.js',
+        },
+        {
+          isFullUrl: false,
+          url: 'ueditor.all.js',
+        },
+      ];
+      // 判断上面的默认资源是否已经加载过的校验函数
+      const defaultEditorDependenciesReadyChecker = () => {
+        // 判断 ueditor.config.js 和 ueditor.all.js 是否均已加载
+        // 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象存在,但为空对象
+        return (
+          window.UE && window.UE.getEditor && window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0
+        );
+      };
+
       return new Promise<void>((resolve, reject) => {
-        if (props.editorDependenciesReadyChecker()) {
+        if (
+          props.editorDependencies &&
+          props.editorDependenciesReadyChecker &&
+          props.editorDependenciesReadyChecker()
+        ) {
           resolve();
-        } else if (window.$loadEventBus) {
-          // 利用订阅发布，确保同时渲染多个组件时，不会重复创建 script 标签
-          window.$loadEventBus.on('dependencies-ready', resolve);
-        } else {
-          window.$loadEventBus = new LoadEvent();
-          // 依次加载依赖的资源文件，这些依赖执行是有顺序要求的，比如 ueditor.all.js 就要晚于 ueditor.config.js 执行
-          // 动态创建 script 是先加载完的先执行，所以不可以一次性创建所有资源的引入脚本
-          const baseUrl = typeof process !== 'undefined' && process.env.BASE_URL;
-          asyncSeries(
-            props.editorDependencies.map((dep) => () => {
-              const link = dep.isFullUrl
-                ? dep.url
-                : (props.config?.UEDITOR_HOME_URL || baseUrl ? `${baseUrl}UEditor/` : '') + dep.url;
-              return loadScript(link);
-            })
-          )
-            .then(() => {
-              resolve();
-              window.$loadEventBus.emit('dependencies-ready');
-            })
-            .catch(reject);
+          return;
         }
+
+        if (!props.editorDependencies && defaultEditorDependenciesReadyChecker()) {
+          resolve();
+          return;
+        }
+
+        const baseUrl = typeof process !== 'undefined' && process.env.BASE_URL;
+        // 转化为完整链接
+        const editorDependencies = (props.editorDependencies || defaultEditorDependencies).map((dep) => {
+          const link = dep.isFullUrl
+            ? dep.url
+            : (props.config?.UEDITOR_HOME_URL || (baseUrl ? `${baseUrl}UEditor/` : '/UEditor/')) + dep.url;
+          return link;
+        });
+
+        // 依次加载依赖的资源文件，这些依赖执行是有顺序要求的，比如 ueditor.all.js 就要晚于 ueditor.config.js 执行
+        // 动态创建 script 是先加载完的先执行，所以不可以一次性创建所有资源的引入脚本
+        asyncSeries(editorDependencies.map((link) => () => loadScript(link)))
+          .then(resolve)
+          .catch(reject);
       });
     };
 
@@ -168,14 +178,14 @@ export default defineComponent({
       emit('before-init', editorId);
       editor = window.UE.getEditor(editorId, props.config);
       editor.addListener('ready', () => {
-        if (editorStatus === EDITOR_STATUS.READY) {
+        if (isEditorReady) {
           // 使用 keep-alive 组件会出现这种情况
           editor.setContent(props.modelValue);
         } else {
-          editorStatus = EDITOR_STATUS.READY;
+          isEditorReady = true;
           emit('ready', editor);
-          if (initValue) {
-            editor.setContent(initValue);
+          if (props.modelValue) {
+            editor.setContent(props.modelValue);
           }
         }
         if (props.mode === 'observer' && window.MutationObserver) {
@@ -189,29 +199,13 @@ export default defineComponent({
     watch(
       modelValue,
       (value) => {
-        console.log('modelValue change', value);
-        if (value === null) {
-          modelValue.value = '';
-        }
-        switch (editorStatus) {
-          case EDITOR_STATUS.UNREADY:
-            editorStatus = EDITOR_STATUS.PENDING;
-            initValue = value;
-            (props.forceInit || typeof window !== 'undefined') &&
-              loadEditorDependencies().then(() => {
-                container ? initEditor() : nextTick(() => initEditor());
-              });
-            break;
-          case EDITOR_STATUS.PENDING:
-            initValue = value;
-            break;
-          case EDITOR_STATUS.READY:
-            if (value !== editor.getContent()) {
-              editor.setContent(value);
-            }
-            break;
-          default:
-            break;
+        if (isEditorReady) {
+          value === editor.getContent() || editor.setContent(value);
+        } else {
+          (props.forceInit || typeof window !== 'undefined') &&
+            loadEditorDependencies().then(() => {
+              container ? initEditor() : nextTick(() => initEditor());
+            });
         }
       },
       {
@@ -220,7 +214,6 @@ export default defineComponent({
     );
 
     onDeactivated(() => {
-      console.log('vue-ueditor-wrap deactivated');
       editor && editor.removeListener('contentChange', observerContentChangeHandler);
       observer && observer.disconnect();
     });

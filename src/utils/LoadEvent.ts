@@ -1,6 +1,11 @@
-// 一个简单的事件订阅发布的实现，取代原生 Event 对象，提升兼容性
+// 一个简单的事件订阅发布的实现
 export class LoadEvent {
-  listeners: { [key: string]: Array<() => void> };
+  listeners: {
+    [key: string]: {
+      triggered: boolean;
+      cbs: Array<() => void>;
+    };
+  };
 
   constructor() {
     this.listeners = {};
@@ -8,12 +13,22 @@ export class LoadEvent {
 
   on(eventName: string, callback: () => void) {
     if (this.listeners[eventName] === undefined) {
-      this.listeners[eventName] = [];
+      this.listeners[eventName] = {
+        triggered: false,
+        cbs: [],
+      };
     }
-    this.listeners[eventName].push(callback);
+    // 如果已经触发过，后续添加监听的 callback 会被直接执行
+    if (this.listeners[eventName].triggered) {
+      callback();
+    }
+    this.listeners[eventName].cbs.push(callback);
   }
 
   emit(eventName: string) {
-    this.listeners[eventName] && this.listeners[eventName].forEach((callback) => callback());
+    if (this.listeners[eventName]) {
+      this.listeners[eventName].triggered = true;
+      this.listeners[eventName].cbs.forEach((callback) => callback());
+    }
   }
 }
