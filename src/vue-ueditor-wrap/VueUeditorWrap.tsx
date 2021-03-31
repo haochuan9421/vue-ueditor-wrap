@@ -1,11 +1,7 @@
-import { defineComponent, PropType, watch, nextTick, toRef, onDeactivated, onUnmounted } from 'vue';
+import { defineComponent, PropType, watch, nextTick, toRef, ref, onDeactivated, onUnmounted } from 'vue';
 import { LoadEvent, debounce, asyncSeries, randomString } from '../utils';
 
 export type ModeType = 'observer' | 'listener';
-export type EditorDependency = {
-  isFullUrl: boolean;
-  url: string;
-};
 
 export default defineComponent({
   name: 'vue-ueditor-wrap',
@@ -54,12 +50,12 @@ export default defineComponent({
     },
     //  SSR 项目，服务端实例化组件时组件内部不会对 UEditor 进行初始化，仅在客户端初始化 UEditor，这个参数设置为 true 可以跳过环境检测，直接初始化
     forceInit: Boolean,
-    // 指定 UEditor 依赖的静态资源
+    // 指定 UEditor 依赖的静态资源，js & css
     editorDependencies: {
-      type: Array as PropType<EditorDependency[]>,
+      type: Array as PropType<string[]>,
     },
     // 检测依赖的静态资源是否加载完成的方法
-    editorDependenciesReadyChecker: {
+    editorDependenciesChecker: {
       type: Function as PropType<() => boolean>,
     },
   },
@@ -70,7 +66,18 @@ export default defineComponent({
     let isEditorReady = false;
     let editor: any;
     let observer: MutationObserver;
-    let container: any = null;
+    const container = ref<HTMLElement>();
+
+    // 默认要加载的资源
+    const defaultEditorDependencies = ['ueditor.config.js', 'ueditor.all.min.js'];
+    // 判断上面的默认资源是否已经加载过的校验函数
+    const defaultEditorDependenciesChecker = () => {
+      // 判断 ueditor.config.js 和 ueditor.all.js 是否均已加载
+      // 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象存在,但为空对象
+      return (
+        window.UE && window.UE.getEditor && window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0
+      );
+    };
 
     const modelValue = toRef(props, 'modelValue');
 
@@ -97,56 +104,72 @@ export default defineComponent({
       });
     };
 
+    // 动态创建 link 标签来加载 CSS 文件
+    const loadCss = (link: string) => {
+      return new Promise<void>((resolve, reject) => {
+        if (!window.$loadEventBus.listeners[link]) {
+          const css = document.createElement('link');
+          css.type = 'text/css';
+          css.rel = 'stylesheet';
+          css.href = link;
+          document.getElementsByTagName('head')[0].appendChild(css);
+          css.onload = () => {
+            window.$loadEventBus.emit(link);
+          };
+          css.onerror = reject;
+        }
+        window.$loadEventBus.on(link, resolve);
+      });
+    };
+
     // 加载 UEditor 相关的静态资源
     const loadEditorDependencies = () => {
-      // 默认要加载的资源
-      const defaultEditorDependencies = [
-        {
-          isFullUrl: false,
-          url: 'ueditor.config.js',
-        },
-        {
-          isFullUrl: false,
-          url: 'ueditor.all.js',
-        },
-      ];
-      // 判断上面的默认资源是否已经加载过的校验函数
-      const defaultEditorDependenciesReadyChecker = () => {
-        // 判断 ueditor.config.js 和 ueditor.all.js 是否均已加载
-        // 仅加载完ueditor.config.js时UE对象和UEDITOR_CONFIG对象存在,仅加载完ueditor.all.js时UEDITOR_CONFIG对象存在,但为空对象
-        return (
-          window.UE && window.UE.getEditor && window.UEDITOR_CONFIG && Object.keys(window.UEDITOR_CONFIG).length !== 0
-        );
-      };
-
       return new Promise<void>((resolve, reject) => {
-        if (
-          props.editorDependencies &&
-          props.editorDependenciesReadyChecker &&
-          props.editorDependenciesReadyChecker()
-        ) {
+        if (props.editorDependencies && props.editorDependenciesChecker && props.editorDependenciesChecker()) {
           resolve();
           return;
         }
 
-        if (!props.editorDependencies && defaultEditorDependenciesReadyChecker()) {
+        if (!props.editorDependencies && defaultEditorDependenciesChecker()) {
           resolve();
           return;
         }
 
-        const baseUrl = typeof process !== 'undefined' && process.env.BASE_URL;
-        // 转化为完整链接
-        const editorDependencies = (props.editorDependencies || defaultEditorDependencies).map((dep) => {
-          const link = dep.isFullUrl
-            ? dep.url
-            : (props.config?.UEDITOR_HOME_URL || (baseUrl ? `${baseUrl}UEditor/` : '/UEditor/')) + dep.url;
-          return link;
-        });
+        // 把 js 和 css 分组
+        const { jsLinks, cssLinks } = (props.editorDependencies || defaultEditorDependencies).reduce<{
+          jsLinks: string[];
+          cssLinks: string[];
+        }>(
+          (res, link) => {
+            // 如果不是完整的 URL 就在前面补上 UEDITOR_HOME_URL, 完整的 URL 形如：
+            // 1. http://www.example.com/xxx.js
+            // 2. https://www.example.com/xxx.js
+            // 3. //www.example.com/xxx.js
+            // 4. www.example.com/xxx.js
+            const isFullUrl = /^((https?:)?\/\/)?[-a-zA-Z0-9]+(\.[-a-zA-Z0-9]+)+\//.test(link);
+            if (!isFullUrl) {
+              link = (props.config?.UEDITOR_HOME_URL || '') + link;
+            }
+            if (link.endsWith('.js')) {
+              res.jsLinks.push(link);
+            } else if (link.endsWith('.css')) {
+              res.cssLinks.push(link);
+            }
+            return res;
+          },
+          {
+            jsLinks: [],
+            cssLinks: [],
+          }
+        );
 
-        // 依次加载依赖的资源文件，这些依赖执行是有顺序要求的，比如 ueditor.all.js 就要晚于 ueditor.config.js 执行
-        // 动态创建 script 是先加载完的先执行，所以不可以一次性创建所有资源的引入脚本
-        asyncSeries(editorDependencies.map((link) => () => loadScript(link)))
-          .then(resolve)
+        Promise.all([
+          Promise.all(cssLinks.map((link) => loadCss(link))),
+          // 依次加载依赖的 JS 文件，JS 执行是有顺序要求的，比如 ueditor.all.js 就要晚于 ueditor.config.js 执行
+          // 动态创建 script 是先加载完的先执行，所以不可以一次性创建所有资源的引入脚本
+          asyncSeries(jsLinks.map((link) => () => loadScript(link))),
+        ])
+          .then(() => resolve())
           .catch(reject);
       });
     };
@@ -174,7 +197,7 @@ export default defineComponent({
     // 实例化编辑器
     const initEditor = () => {
       const editorId = props.editorId || 'editor_' + randomString(8);
-      container.id = editorId;
+      container.value!.id = editorId;
       emit('before-init', editorId);
       editor = window.UE.getEditor(editorId, props.config);
       editor.addListener('ready', () => {
@@ -204,7 +227,7 @@ export default defineComponent({
         } else {
           (props.forceInit || typeof window !== 'undefined') &&
             loadEditorDependencies().then(() => {
-              container ? initEditor() : nextTick(() => initEditor());
+              container.value ? initEditor() : nextTick(() => initEditor());
             });
         }
       },
@@ -227,17 +250,10 @@ export default defineComponent({
       }
     });
 
-    return () => {
-      return (
-        <div>
-          <div
-            ref={(el) => {
-              container = el;
-            }}
-            name={props.name}
-          />
-        </div>
-      );
-    };
+    return () => (
+      <div>
+        <div ref={container} name={props.name} />
+      </div>
+    );
   },
 });
