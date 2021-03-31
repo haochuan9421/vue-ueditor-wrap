@@ -64,7 +64,7 @@ v-model 的实现依赖对编辑器内容变化的监听，组件提供了两种
 
 <br/>
 
-为此 `vue-ueditor-wrap` 内部会在组件实例化时通过动态创建 `script` 的方式来加载 UEditor 脚本，等脚本加载完成后，再实例化 UEditor。默认加载的脚本是 `ueditor.config.js` 和 `ueditor.all.min.js`，如果你希望自定义要加载的 JS，比如集成第三方的插件，那你就可以利用 `editor-dependencies` 属性直接指定依赖的资源，支持填写 js 和 css 文件的链接。具体用法可参考[集成秀米的示例](/#/xiumi)。
+为此 `vue-ueditor-wrap` 内部会在组件实例化时通过动态创建 `script` 的方式来加载 UEditor 脚本，等脚本加载完成后，再实例化 UEditor。默认加载的脚本是 `ueditor.config.js` 和 `ueditor.all.min.js`，如果你希望自定义要加载的 JS，比如集成第三方的插件，那你就可以利用 `editor-dependencies` 属性直接指定依赖的资源，支持填写 js 和 css 文件的链接。具体用法可参考[集成秀米的示例](#/xiumi)。
 
 <br/>
 

@@ -77,7 +77,7 @@ export default {
 
 <br/>
 
-了解更多，请参考 [组件 API](/#/api)
+了解更多，请参考 [组件 API](#/api)
 
 ### 问题反馈
 
@@ -89,7 +89,7 @@ export default {
 
 请注意[提问的艺术](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)。
 
-##### 方式二、添加我的个人微信，备注 "ueditor"，拉你进交流区。
+##### 方式二、添加我的微信，备注 "ueditor"，拉你进交流区。
 
 <img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" style="width: 200px" />
 
