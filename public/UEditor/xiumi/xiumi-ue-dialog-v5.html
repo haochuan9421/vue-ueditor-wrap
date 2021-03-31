@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>XIUMI connect</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      #xiumi {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: none;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <iframe id="xiumi" src="//xiumi.us/studio/v5#/paper"> </iframe>
+    <!-- 注意这个文件的路径 -->
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script>
+      var xiumi = document.getElementById('xiumi');
+      var xiumi_url = window.location.protocol + '//xiumi.us';
+      console.log('xiumi_url is %o', xiumi_url);
+      xiumi.onload = function () {
+        console.log('postMessage to %o', xiumi_url);
+        xiumi.contentWindow.postMessage('ready', xiumi_url);
+      };
+      document.addEventListener('mousewheel', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      });
+      window.addEventListener(
+        'message',
+        function (event) {
+          console.log('Received message from xiumi, origin: %o %o', event.origin, xiumi_url);
+          if (event.origin == xiumi_url) {
+            console.log('Inserting html');
+            editor.execCommand('insertHtml', event.data);
+            editor.fireEvent('catchRemoteImage'); // 注意：这里要触发一下抓取远程图片的事件，才能把秀米图片转存到自己的存储服务上
+            console.log('Xiumi dialog is closing');
+            dialog.close();
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>

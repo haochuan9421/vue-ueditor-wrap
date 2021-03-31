@@ -5,4 +5,4 @@ const VueUeditorWrap = withInstall<typeof _VueUeditorWrap>(_VueUeditorWrap);
 
 export default VueUeditorWrap;
 export { VueUeditorWrap };
-export type { ModeType, EditorDependency } from './VueUeditorWrap';
+export type { ModeType } from './VueUeditorWrap';

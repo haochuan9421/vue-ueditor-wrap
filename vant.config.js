@@ -25,24 +25,40 @@ module.exports = {
     ],
     nav: [
       {
-        title: '开发指南',
+        title: '组件',
         items: [
           {
             path: 'home',
             title: '介绍',
           },
           {
-            path: 'quickstart',
-            title: '快速上手',
+            path: 'api',
+            title: '组件 API',
+          },
+          {
+            path: 'faq',
+            title: '常见问题',
+          },
+          {
+            path: 'changelog',
+            title: '更新日志',
           },
         ],
       },
       {
-        title: '基础组件',
+        title: '示例',
         items: [
           {
-            path: 'vue-ueditor-wrap',
-            title: 'VueUeditorWrap',
+            path: 'custom-btn',
+            title: '自定义按钮',
+          },
+          {
+            path: 'custom-dialog',
+            title: '自定义弹窗',
+          },
+          {
+            path: 'xiumi',
+            title: '集成秀米',
           },
         ],
       },
