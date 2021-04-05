@@ -3,3 +3,4 @@ lib
 public
 dist
 node_modules
+*.tsx

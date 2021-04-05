@@ -1,13 +1,27 @@
 {
   "name": "vue-ueditor-wrap",
-  "version": "2.4.4",
+  "version": "3.0.0",
   "description": "Vue + UEditor + v-model双向绑定",
-  "main": "lib/vue-ueditor-wrap.min.js",
+  "module": "es/index.js",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "style": "lib/index.css",
+  "files": [
+    "lib",
+    "es",
+    "vetur"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
-    "dev": "webpack-dev-server --progress --config webpack.dev.js",
-    "build": "node build.js",
-    "lint": "eslint --ext .js,.vue src",
-    "fix": "eslint --fix --ext .js,.vue src"
+    "dev": "vant-cli dev",
+    "test": "vant-cli test",
+    "lint": "vant-cli lint",
+    "build": "vant-cli build",
+    "release": "vant-cli release",
+    "test:coverage": "open test/coverage/index.html",
+    "build-site": "vant-cli build-site && gh-pages -d site"
   },
   "repository": {
     "type": "git",
@@ -26,38 +40,46 @@
     "url": "https://github.com/HaoChuan9421/vue-ueditor-wrap/issues"
   },
   "homepage": "https://github.com/HaoChuan9421/vue-ueditor-wrap#readme",
+  "dependencies": {
+    "@babel/runtime": "7.x"
+  },
   "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-eslint": "^8.2.1",
-    "babel-helper-vue-jsx-merge-props": "^2.0.3",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-syntax-jsx": "^6.18.0",
-    "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-plugin-transform-vue-jsx": "^3.5.0",
-    "babel-preset-env": "^1.3.2",
-    "babel-preset-stage-2": "^6.22.0",
-    "chalk": "2.0.1",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "0.28.0",
-    "eslint": "^4.15.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.7.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.0.0",
-    "friendly-errors-webpack-plugin": "^1.6.1",
-    "html-webpack-plugin": "^2.30.1",
-    "ora": "1.2.0",
-    "portfinder": "^1.0.13",
-    "rimraf": "^2.6.0",
-    "uglifyjs-webpack-plugin": "^1.1.1",
-    "vue": "^2.5.2",
-    "vue-loader": "^13.3.0",
-    "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
-  }
+    "@vant/cli": "^3.7.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "copy-webpack-plugin": "6",
+    "lodash": "^4.17.21",
+    "prettier": "^2.2.1",
+    "vue": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "vant-cli commit-lint"
+    }
+  },
+  "lint-staged": {
+    "*.md": "prettier --write",
+    "*.{ts,tsx,js,vue,less}": "prettier --write",
+    "*.{ts,tsx,js,jsx,vue}": "eslint --fix",
+    "*.{vue,css,less}": "stylelint --fix"
+  },
+  "sideEffects": [
+    "es/**/style/*",
+    "lib/**/style/*",
+    "*.css",
+    "*.less"
+  ],
+  "vetur": {
+    "tags": "vetur/tags.json",
+    "attributes": "vetur/attributes.json"
+  },
+  "web-types": "vetur/web-types.json",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
 }
