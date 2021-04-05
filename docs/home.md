@@ -83,12 +83,6 @@ export default {
 
 ##### 方式一、去 GitHub 提 [ISSUE](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues)
 
-> UEditor 已经是一款比较“老旧”的富文本编辑器啦，但是在国内的使用量依然很大，遗憾的是百度官方似乎已经不再维护了，所以难免有一些 BUG。本仓库只是一个“包装”了 UEditor 的 Vue 组件，并不是**UEditor 的 Vue 版**。这个组件最初是我自己在写公司项目时封装的，开源出来是为了让大家也能在项目中更方便的使用 UEditor。请不要将 UEditor 本身的 BUG 反馈到本仓库 ISSUE 中。
-
-<br/>
-
-请注意[提问的艺术](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)。
-
 ##### 方式二、添加我的微信，备注 "ueditor"，拉你进交流区。
 
 <img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" style="width: 200px" />
