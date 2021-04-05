@@ -11,6 +11,9 @@
     "es",
     "vetur"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "dev": "vant-cli dev",
     "test": "vant-cli test",
