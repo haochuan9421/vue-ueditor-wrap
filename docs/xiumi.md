@@ -4,7 +4,7 @@
 
 [秀米图文排版 UEditor 插件示例](https://ent.xiumi.us/ue/)
 
-### 方式一、vue-ueditor-wrap + xiumi
+### 方式一、使用 editor-dependencies 属性
 
 ```html
 <template>

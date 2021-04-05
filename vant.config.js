@@ -57,6 +57,10 @@ module.exports = {
             title: '自定义弹窗',
           },
           {
+            path: 'custom-vue-dialog',
+            title: '自定义 Vue 弹窗',
+          },
+          {
             path: 'xiumi',
             title: '集成秀米',
           },

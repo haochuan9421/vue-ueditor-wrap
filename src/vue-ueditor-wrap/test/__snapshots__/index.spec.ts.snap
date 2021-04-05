@@ -4,3 +4,10 @@ exports[`render demo button 1`] = `
 <button class="demo-button primary">
 </button>
 `;
+
+exports[`render vue-ueditor-wrap 1`] = `
+<div>
+  <div>
+  </div>
+</div>
+`;

@@ -7,7 +7,7 @@
 ##### 1. 安装组件
 
 ```bash
-# Vue 3 项目，请安装 v3 版本
+# vue-ueditor-wrap v3 仅支持 Vue 3
 npm i vue-ueditor-wrap@3.x -S
 # or
 yarn add vue-ueditor-wrap@3.x
@@ -24,7 +24,7 @@ yarn add vue-ueditor-wrap@3.x
 | utf8          | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-php.zip) | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-net.zip) | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-jsp.zip) | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-asp.zip) |
 | gbk           | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-php.zip)  | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-net.zip)  | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-jsp.zip)  | [下载](//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-asp.zip)  |
 
-<p style="color: #999;">说明：不同语言的 UEditor，前端部分，并无区别，只是包含了对应语言的 <a href="http://fex.baidu.com/ueditor/#server-deploy" target="_blank" rel="noopener noreferrer">服务端</a> 示例代码。UEditor 官方并没有提供 Node.js 版的示例代码，有需求的同学可以参考 <a href="https://github.com/HaoChuan9421/ueditor-koa-server" target="_blank" rel="noopener noreferrer">我的实现</a>。</p>
+<p style="color: #999;">说明：不同语言的 UEditor，前端部分，并无区别，只是包含了对应语言的 <a href="http://fex.baidu.com/ueditor/#server-deploy" target="_blank" rel="noopener noreferrer">服务端</a> 示例代码。UEditor 官方并没有提供 Node.js 版的示例代码，有需求的同学可以参考 <a href="https://github.com/HaoChuan9421/ueditor-koa-server" target="_blank" rel="noopener noreferrer">此处</a>。</p>
 
 <br/>
 
@@ -62,7 +62,7 @@ export default {
   created() {
     // 更多 UEditor 配置，参考 http://fex.baidu.com/ueditor/#start-config
     this.editorConfig = {
-      UEDITOR_HOME_URL: '/UEditor/', // 访问 UEditor 静态资源的根路径
+      UEDITOR_HOME_URL: '/UEditor/', // 访问 UEditor 静态资源的根路径，可参考常见问题1
       serverUrl: '//ueditor.szcloudplus.com/cos', // 服务端接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
     };
   },
