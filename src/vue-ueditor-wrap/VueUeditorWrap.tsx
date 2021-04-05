@@ -226,9 +226,15 @@ export default defineComponent({
           value === editor.getContent() || editor.setContent(value);
         } else {
           (props.forceInit || typeof window !== 'undefined') &&
-            loadEditorDependencies().then(() => {
-              container.value ? initEditor() : nextTick(() => initEditor());
-            });
+            loadEditorDependencies()
+              .then(() => {
+                container.value ? initEditor() : nextTick(() => initEditor());
+              })
+              .catch(() => {
+                throw new Error(
+                  '[vue-ueditor-wrap] UEditor 资源加载失败！请检查资源是否存在，UEDITOR_HOME_URL 是否配置正确！'
+                );
+              });
         }
       },
       {
