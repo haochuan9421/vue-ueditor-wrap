@@ -1,7 +1,7 @@
 <h1 align="center">vue-ueditor-wrap</h1
 >
 
-<p align="center">一个“包装”了 UEditor 的 Vue 组件，支持通过 v-model 来绑定富文本编辑器的内容。</p>
+<p align="center">一个“包装”了 UEditor 的 Vue 组件，支持通过 v-model 来绑定富文本编辑器的内容，让 UEditor 的使用简单到像 Input 框一样。</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vue-ueditor-wrap"><img src="https://img.shields.io/npm/v/vue-ueditor-wrap.svg?style=flat-square" alt="Version"></a>
@@ -13,9 +13,9 @@
 </p>
 
 <p align="center">
-  🔥 <a href="https://hc199421.gitee.io/vue-ueditor-wrap">文档网站（国内）</a>
+  🔥 <a href="https://hc199421.gitee.io/vue-ueditor-wrap" target="_blank" rel="noopener noreferrer">文档网站（国内）</a>
   &nbsp;
-  🌈 <a href="https://haochuan9421.github.io/vue-ueditor-wrap">文档网站（GitHub）</a>
+  🌈 <a href="https://haochuan9421.github.io/vue-ueditor-wrap" target="_blank" rel="noopener noreferrer">文档网站（GitHub）</a>
 	&nbsp;
-	🧭 <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/tree/2.x">Vue 2 项目请移步此处</a>
+	🧭 <a href="https://github.com/HaoChuan9421/vue-ueditor-wrap/tree/2.x" target="_blank" rel="noopener noreferrer">Vue 2 项目请移步此处</a>
 </p>
