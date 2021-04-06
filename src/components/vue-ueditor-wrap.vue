@@ -163,7 +163,9 @@ export default {
     // 动态创建 script 标签来加载 JS 脚本，保证同一个脚本只被加载一次
     _loadScript (link) {
       return new Promise((resolve, reject) => {
-        if (!window.$loadEventBus.listeners[link]) {
+        window.$loadEventBus.on(link, resolve);
+        if (window.$loadEventBus.listeners[link].requested === false) {
+          window.$loadEventBus.listeners[link].requested === true;
           // 如果这个资源从未被请求过，就手动创建脚本去加载
           const script = document.createElement('script');
           script.src = link;
@@ -174,13 +176,14 @@ export default {
           };
           script.onerror = reject;
         }
-        window.$loadEventBus.on(link, resolve);
       });
     },
     // 动态创建 link 标签来加载 CSS 文件
     _loadCss (link) {
       return new Promise((resolve, reject) => {
-        if (!window.$loadEventBus.listeners[link]) {
+        window.$loadEventBus.on(link, resolve);
+        if (!window.$loadEventBus.listeners[link].requested === false) {
+          window.$loadEventBus.listeners[link].requested === true;
           const css = document.createElement('link');
           css.type = 'text/css';
           css.rel = 'stylesheet';
@@ -191,7 +194,6 @@ export default {
           };
           css.onerror = reject;
         }
-        window.$loadEventBus.on(link, resolve);
       });
     },
     // 加载 UEditor 相关的静态资源

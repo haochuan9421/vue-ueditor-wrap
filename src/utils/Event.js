@@ -5,6 +5,7 @@ function LoadEvent () {
     if (this.listeners[eventName] === undefined) {
       this.listeners[eventName] = {
         triggered: false,
+        requested: false,
         cbs: []
       };
     }
