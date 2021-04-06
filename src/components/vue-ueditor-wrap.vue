@@ -169,12 +169,11 @@ export default {
           // 如果这个资源从未被请求过，就手动创建脚本去加载
           const script = document.createElement('script');
           script.src = link;
-          document.getElementsByTagName('head')[0].appendChild(script);
-
           script.onload = () => {
             window.$loadEventBus.emit(link);
           };
           script.onerror = reject;
+          document.getElementsByTagName('head')[0].appendChild(script);
         }
       });
     },
@@ -188,11 +187,11 @@ export default {
           css.type = 'text/css';
           css.rel = 'stylesheet';
           css.href = link;
-          document.getElementsByTagName('head')[0].appendChild(css);
           css.onload = () => {
             window.$loadEventBus.emit(link);
           };
           css.onerror = reject;
+          document.getElementsByTagName('head')[0].appendChild(css);
         }
       });
     },
