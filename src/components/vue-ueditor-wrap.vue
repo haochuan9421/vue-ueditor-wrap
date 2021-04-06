@@ -51,7 +51,7 @@ export default {
     },
     destroy: {
       type: Boolean,
-      default: false
+      default: true
     },
     name: {
       type: String,
