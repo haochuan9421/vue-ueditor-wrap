@@ -181,7 +181,7 @@ export default {
     _loadCss (link) {
       return new Promise((resolve, reject) => {
         window.$loadEventBus.on(link, resolve);
-        if (!window.$loadEventBus.listeners[link].requested === false) {
+        if (window.$loadEventBus.listeners[link].requested === false) {
           window.$loadEventBus.listeners[link].requested = true;
           const css = document.createElement('link');
           css.type = 'text/css';
