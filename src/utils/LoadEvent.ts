@@ -3,6 +3,7 @@ export class LoadEvent {
   listeners: {
     [key: string]: {
       triggered: boolean;
+      requested: boolean;
       cbs: Array<() => void>;
     };
   };
@@ -15,6 +16,7 @@ export class LoadEvent {
     if (this.listeners[eventName] === undefined) {
       this.listeners[eventName] = {
         triggered: false,
+        requested: false,
         cbs: [],
       };
     }

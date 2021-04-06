@@ -89,36 +89,37 @@ export default defineComponent({
     // 动态创建 script 标签来加载 JS 脚本，保证同一个脚本只被加载一次
     const loadScript = (link: string) => {
       return new Promise<void>((resolve, reject) => {
-        if (!window.$loadEventBus.listeners[link]) {
+        window.$loadEventBus.on(link, resolve);
+        if (window.$loadEventBus.listeners[link].requested === false) {
+          window.$loadEventBus.listeners[link].requested = true;
           // 如果这个资源从未被请求过，就手动创建脚本去加载
           const script = document.createElement('script');
           script.src = link;
-          document.getElementsByTagName('head')[0].appendChild(script);
-
           script.onload = () => {
             window.$loadEventBus.emit(link);
           };
           script.onerror = reject;
+          document.getElementsByTagName('head')[0].appendChild(script);
         }
-        window.$loadEventBus.on(link, resolve);
       });
     };
 
     // 动态创建 link 标签来加载 CSS 文件
     const loadCss = (link: string) => {
       return new Promise<void>((resolve, reject) => {
-        if (!window.$loadEventBus.listeners[link]) {
+        window.$loadEventBus.on(link, resolve);
+        if (window.$loadEventBus.listeners[link].requested === false) {
+          window.$loadEventBus.listeners[link].requested = true;
           const css = document.createElement('link');
           css.type = 'text/css';
           css.rel = 'stylesheet';
           css.href = link;
-          document.getElementsByTagName('head')[0].appendChild(css);
           css.onload = () => {
             window.$loadEventBus.emit(link);
           };
           css.onerror = reject;
+          document.getElementsByTagName('head')[0].appendChild(css);
         }
-        window.$loadEventBus.on(link, resolve);
       });
     };
 
