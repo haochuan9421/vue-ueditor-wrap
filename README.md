@@ -84,7 +84,7 @@ yarn add vue-ueditor-wrap@2.x
     data() {
       return {
         msg: "<h2>Hello World!</h2>",
-        myConfig: {
+        editorConfig: {
           // 访问 UEditor 静态资源的根路径，可参考 https://hc199421.gitee.io/vue-ueditor-wrap/#/faq
           UEDITOR_HOME_URL: "/UEditor/",
           // 服务端接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
@@ -160,7 +160,7 @@ v-model 的实现依赖对编辑器内容变化的监听，组件提供了两种
 
 <br/>
 
-为此 `vue-ueditor-wrap` 内部会在组件实例化时通过动态创建 `script` 的方式来加载 UEditor 脚本，等脚本加载完成后，再实例化 UEditor。默认加载的脚本是 `ueditor.config.js` 和 `ueditor.all.min.js`，如果你希望自定义要加载的 JS，比如集成第三方的插件，那你就可以利用 `editor-dependencies` 属性直接指定依赖的资源，支持填写 js 和 css 文件的链接。具体用法可参考[集成秀米的示例](#/xiumi)。
+为此 `vue-ueditor-wrap` 内部会在组件实例化时通过动态创建 `script` 的方式来加载 UEditor 脚本，等脚本加载完成后，再实例化 UEditor。默认加载的脚本是 `ueditor.config.js` 和 `ueditor.all.min.js`，如果你希望自定义要加载的 JS，比如集成第三方的插件，那你就可以利用 `editor-dependencies` 属性直接指定依赖的资源，支持填写 js 和 css 文件的链接。具体用法可参考[集成秀米的示例](https://hc199421.gitee.io/vue-ueditor-wrap/#/xiumi)。
 
 <br/>
 
@@ -179,7 +179,7 @@ v-model 的实现依赖对编辑器内容变化的监听，组件提供了两种
 
 ### before-init 事件说明
 
-`before-init` 在 UEditor 相关的资源已经加载完毕之后、编辑器初始化之前触发。你可以在此时机，通过操作 window.UE 对象，来进行诸如添加自定义按钮、弹窗等的二次开发。`before-init` 的触发函数以 `编辑器 id` 作为入参。具体使用方式可参考[自定义按钮](#/custom-btn)，[自定义弹窗](#/custom-dialog) 的示例。
+`before-init` 在 UEditor 相关的资源已经加载完毕之后、编辑器初始化之前触发。你可以在此时机，通过操作 window.UE 对象，来进行诸如添加自定义按钮、弹窗等的二次开发。`before-init` 的触发函数以 `编辑器 id` 作为入参。具体使用方式可参考[自定义按钮](https://hc199421.gitee.io/vue-ueditor-wrap/#/custom-btn)，[自定义弹窗](https://hc199421.gitee.io/vue-ueditor-wrap/#/custom-dialog) 的示例。
 
 ### ready 事件说明
 
@@ -207,7 +207,7 @@ methods: {
 
 #### 方式二、添加我的微信，备注 "ueditor"，拉你进交流区。
 
-<img src="https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" style="width: 200px" />
+<img src="https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" width="200" />
 
 如果你感兴趣的话，可以阅读一下本组件的源码，并不复杂，欢迎 PR。
 
