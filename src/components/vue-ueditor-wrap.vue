@@ -276,7 +276,8 @@ export default {
       });
     },
     _contentChangeHandler () {
-      this.$emit('input', this.editor.getContent());
+      this.innerValue = this.editor.getContent();
+      this.$emit('input', this.innerValue);
     },
     // 基于 UEditor 的 contentChange 事件
     _normalChangeListener () {
@@ -288,7 +289,8 @@ export default {
         if (this.editor.document.getElementById('baidu_pastebin')) {
           return;
         }
-        this.$emit('input', this.editor.getContent());
+        this.innerValue = this.editor.getContent();
+        this.$emit('input', this.innerValue);
       };
       // 函数防抖
       this.observer = new MutationObserver(
@@ -318,7 +320,7 @@ export default {
     value: {
       handler (value) {
         if (this.isEditorReady) {
-          value === this.editor.getContent() || this.editor.setContent(value);
+          value === this.innerValue || this.editor.setContent(value || '');
         } else {
           (this.forceInit || typeof window !== 'undefined') &&
             this._loadEditorDependencies()
