@@ -66,6 +66,7 @@ export default defineComponent({
     let isEditorReady = false;
     let editor: any;
     let observer: MutationObserver;
+    let innerValue: string;
     const container = ref<HTMLElement>();
 
     // 默认要加载的资源
@@ -177,7 +178,8 @@ export default defineComponent({
 
     // 基于 UEditor 的 contentChange 事件
     const observerContentChangeHandler = () => {
-      emit('update:modelValue', editor.getContent());
+      innerValue = editor.getContent();
+      emit('update:modelValue', innerValue);
     };
     const normalChangeListener = () => {
       editor.addListener('contentChange', observerContentChangeHandler);
@@ -188,7 +190,8 @@ export default defineComponent({
       if (editor.document.getElementById('baidu_pastebin')) {
         return;
       }
-      emit('update:modelValue', editor.getContent());
+      innerValue = editor.getContent();
+      emit('update:modelValue', innerValue);
     };
     const observerChangeListener = () => {
       observer = new MutationObserver(debounce(changeHandle, props.observerDebounceTime));
@@ -224,7 +227,7 @@ export default defineComponent({
       modelValue,
       (value) => {
         if (isEditorReady) {
-          value === editor.getContent() || editor.setContent(value);
+          value === innerValue || editor.setContent(value || '');
         } else {
           (props.forceInit || typeof window !== 'undefined') &&
             loadEditorDependencies()
