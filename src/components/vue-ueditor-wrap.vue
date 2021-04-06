@@ -165,7 +165,7 @@ export default {
       return new Promise((resolve, reject) => {
         window.$loadEventBus.on(link, resolve);
         if (window.$loadEventBus.listeners[link].requested === false) {
-          window.$loadEventBus.listeners[link].requested === true;
+          window.$loadEventBus.listeners[link].requested = true;
           // 如果这个资源从未被请求过，就手动创建脚本去加载
           const script = document.createElement('script');
           script.src = link;
@@ -183,7 +183,7 @@ export default {
       return new Promise((resolve, reject) => {
         window.$loadEventBus.on(link, resolve);
         if (!window.$loadEventBus.listeners[link].requested === false) {
-          window.$loadEventBus.listeners[link].requested === true;
+          window.$loadEventBus.listeners[link].requested = true;
           const css = document.createElement('link');
           css.type = 'text/css';
           css.rel = 'stylesheet';
