@@ -1,9 +1,9 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const portfinder = require('portfinder')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const portfinder = require('portfinder');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const webpackConfig = {
   entry: './src/main.js',
@@ -13,7 +13,17 @@ const webpackConfig = {
     hot: true, // 模块热替换
     quiet: true, // 终端安静
     clientLogLevel: 'error', // 浏览器控制台安静
-    disableHostCheck: true
+    disableHostCheck: true,
+    historyApiFallback: {
+      // 支持 HTML5 History API
+      disableDotRule: true,
+      rewrites: [
+        {
+          from: /./,
+          to: path.posix.join('/', 'index.html')
+        }
+      ]
+    }
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
@@ -51,23 +61,25 @@ const webpackConfig = {
       }
     ])
   ]
-}
+};
 
 module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = webpackConfig.devServer.port
-  portfinder.getPort((err, port) => { // 端口占用检测
+  portfinder.basePort = webpackConfig.devServer.port;
+  portfinder.getPort((err, port) => {
+    // 端口占用检测
     if (err) {
-      reject(err)
+      reject(err);
     } else {
-      webpackConfig.devServer.port = port
+      webpackConfig.devServer.port = port;
       webpackConfig.plugins.push(
         new FriendlyErrorsWebpackPlugin({
-          compilationSuccessInfo: { // 监听构建成功
+          compilationSuccessInfo: {
+            // 监听构建成功
             messages: [`启动成功: http://${webpackConfig.devServer.host}:${port}`]
           }
         })
-      )
-      resolve(webpackConfig)
+      );
+      resolve(webpackConfig);
     }
-  })
-})
+  });
+});
