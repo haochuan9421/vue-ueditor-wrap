@@ -74,7 +74,7 @@ yarn add vue-ueditor-wrap@2.x
 
    > 至此你已经可以在页面中看到一个初始化之后的 `UEditor` 了，并且它已经成功和数据绑定了！👏👏👏
 
-5. 根据项目需求修改配置，完整配置请参考 [ueditor.config.js](https://github.com/HaoChuan9421/vue-ueditor-wrap/blob/master/public/UEditor/ueditor.config.js) 或 [官方文档](http://fex.baidu.com/ueditor/)
+5. 根据项目需求修改配置，完整配置请参考 [ueditor.config.js](https://github.com/HaoChuan9421/vue-ueditor-wrap/blob/master/public/UEditor/ueditor.config.js) 或 [官方文档](http://fex.baidu.com/ueditor/#start-config)
 
     ```html
     <vue-ueditor-wrap v-model="msg" :config="editorConfig" editor-id="editor-demo-01"></vue-ueditor-wrap>
