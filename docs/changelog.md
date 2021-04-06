@@ -26,6 +26,14 @@
 
 ## 更新内容
 
+### v3.0.2
+
+`2021-04-06`
+
+**Fixes**
+
+- 支持在 VSCode（需安装 [Vetur 插件](https://vuejs.github.io/vetur/guide/component-data.html#supported-frameworks)）和 WebStorm 中自动提示和补全组件属性。
+
 ### v3.0.0
 
 `2021-04-05`
