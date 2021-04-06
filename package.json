@@ -9,6 +9,12 @@
     "lint": "eslint --ext .js,.vue src",
     "fix": "eslint --fix --ext .js,.vue src"
   },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HaoChuan9421/vue-ueditor-wrap.git"
