@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 1. 引入 parse 脚本 -->
+    <script src="./ueditor.parse.min.js"></script>
+  </head>
+  <body>
+    <div id="previewer"></div>
+    <script>
+      // 2. 接收父页面发送过来的富文本内容，并渲染到 previewer 内
+      var previewer = document.getElementById('previewer');
+      window.addEventListener(
+        'message',
+        function (event) {
+          if (event.origin !== window.location.origin) {
+            return false;
+          }
+          previewer.innerHTML = event.data;
+          uParse('#previewer', {
+            // UEditor 所在的路径，这个要给出，让 uparse 能找到 third-party 目录
+            rootPath: './',
+            // 自定义列表标号图片的地址
+            liiconpath: './listicon/',
+          });
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
