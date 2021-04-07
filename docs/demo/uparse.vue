@@ -1,7 +1,8 @@
 <template>
   <vue-ueditor-wrap v-model="msg" :config="editorConfig" editor-id="uparse-demo"></vue-ueditor-wrap>
   <button @click="onPreview">预览</button>
-  <div id="previewer"></div>
+  <!-- 通过 iframe 预览可以隔绝父页面的样式干扰 -->
+  <iframe id="previewer" :src="iframeSrc" frameborder="0" style="width: 100%; min-height: 180px"></iframe>
 </template>
 
 <script>
@@ -11,7 +12,9 @@ export default {
   setup() {
     const UEDITOR_HOME_URL =
       process.env.NODE_ENV === 'development' ? '/UEditor/' : `${process.env.PUBLIC_PATH}UEditor/`;
-    const msg = ref('<h2>Hello World!</h2>');
+    const msg = ref(
+      '<ol class="custom_cn2 list-paddingleft-1"><li class="list-cn-3-1 list-cn2-paddingleft-1"><p>Vue</p></li><li class="list-cn-3-2 list-cn2-paddingleft-1"><p>React</p></li></ol>'
+    );
 
     return {
       msg,
@@ -23,6 +26,7 @@ export default {
         // 自定义列表标号图片的地址，默认是 http://bs.baidu.com/listicon/，不过默认链接下的列表小图片都已经 404 了，所以下载了一份放到项目里啦
         listiconpath: `${UEDITOR_HOME_URL}listicon/`,
       },
+      iframeSrc: `${UEDITOR_HOME_URL}previewer.html`,
     };
   },
   methods: {
@@ -41,16 +45,9 @@ export default {
       });
     },
     onPreview() {
-      const previewer = document.getElementById('previewer');
-      previewer.innerHTML = this.msg;
-      this.loadUparseScript().then(() => {
-        window.uParse('#previewer', {
-          // UEditor 所在的路径，这个要给出，让 uparse 能找到 third-party 目录
-          rootPath: this.editorConfig.UEDITOR_HOME_URL,
-          // 同 listiconpath
-          liiconpath: this.editorConfig.listiconpath,
-        });
-      });
+      const frameWindow = document.getElementById('previewer').contentWindow;
+      // 通过 postMessage 把富文本内容发送给 iframe 子页面
+      frameWindow.postMessage(this.msg);
     },
   },
 };
