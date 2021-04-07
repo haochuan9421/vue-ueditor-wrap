@@ -49,6 +49,10 @@ module.exports = {
         title: '示例',
         items: [
           {
+            path: 'uparse',
+            title: '编辑器内容展示',
+          },
+          {
             path: 'custom-btn',
             title: '自定义按钮',
           },
