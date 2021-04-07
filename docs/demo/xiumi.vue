@@ -21,6 +21,7 @@ export default {
       serverUrl: '//ueditor.szcloudplus.com/cos',
       UEDITOR_HOME_URL: this.UEDITOR_HOME_URL,
       catchRemoteImageEnable: true, // 抓取远程图片
+      listiconpath: `${this.UEDITOR_HOME_URL}listicon/`,
       // whiteList 已经在 ueditor.config.js 里改过了，此处略
     };
   },

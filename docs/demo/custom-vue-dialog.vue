@@ -105,6 +105,7 @@ export default {
           'drafts',
         ],
       ],
+      listiconpath: `//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/listicon/`,
     };
   },
   methods: {

@@ -16,6 +16,7 @@ export default {
     this.editorConfig = {
       serverUrl: '//ueditor.szcloudplus.com/cos',
       UEDITOR_HOME_URL: '//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/',
+      listiconpath: `//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/listicon/`,
     };
   },
 };

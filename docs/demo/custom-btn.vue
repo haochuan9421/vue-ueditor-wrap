@@ -20,6 +20,7 @@ export default {
     this.editorConfig = {
       serverUrl: '//ueditor.szcloudplus.com/cos',
       UEDITOR_HOME_URL: this.UEDITOR_HOME_URL,
+      listiconpath: `${this.UEDITOR_HOME_URL}listicon/`,
     };
   },
   methods: {
