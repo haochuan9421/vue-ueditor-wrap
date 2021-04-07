@@ -43,3 +43,5 @@
 ```
 
 </details>
+
+> 关于列表序号不显示的问题可以参考这个 [ISSUE](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues/155)

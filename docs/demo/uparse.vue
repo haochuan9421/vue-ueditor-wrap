@@ -30,20 +30,6 @@ export default {
     };
   },
   methods: {
-    // 加载 UEditor/ueditor.parse.js，可以提前在 html 中引入
-    loadUparseScript() {
-      return new Promise((resolve, reject) => {
-        if (window.uParse) {
-          resolve();
-        } else {
-          const script = document.createElement('script');
-          script.src = `${this.editorConfig.UEDITOR_HOME_URL}ueditor.parse.js`;
-          script.onload = resolve;
-          script.onerror = reject;
-          document.getElementsByTagName('head')[0].appendChild(script);
-        }
-      });
-    },
     onPreview() {
       const frameWindow = document.getElementById('previewer').contentWindow;
       // 通过 postMessage 把富文本内容发送给 iframe 子页面
