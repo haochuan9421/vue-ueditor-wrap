@@ -249,11 +249,9 @@ export default {
             if (!isFullUrl) {
               link = (this.mixedConfig.UEDITOR_HOME_URL || '') + link;
             }
-            const linkParts = link.split('.');
-            const extname = linkParts[linkParts.length - 1];
-            if (extname === 'js') {
+            if (link.slice(-3) === '.js') {
               res.jsLinks.push(link);
-            } else if (extname === 'css') {
+            } else if (link.slice(-4) === '.css') {
               res.cssLinks.push(link);
             }
             return res;
