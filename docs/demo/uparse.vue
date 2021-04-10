@@ -1,20 +1,26 @@
 <template>
-  <vue-ueditor-wrap v-model="msg" :config="editorConfig" editor-id="uparse-demo"></vue-ueditor-wrap>
-  <button @click="onPreview">预览</button>
+  <vue-ueditor-wrap
+    v-model="msg"
+    :config="editorConfig"
+    editor-id="uparse-demo"
+    @ready="onEditorReady"
+  ></vue-ueditor-wrap>
+  <button @click="preview">预览</button>
   <!-- 通过 iframe 预览可以隔绝父页面的样式干扰 -->
-  <iframe id="previewer" :src="iframeSrc" frameborder="0" style="width: 100%; min-height: 180px"></iframe>
+  <iframe ref="previewer" :src="iframeSrc" frameborder="0" style="width: 100%; min-height: 180px"></iframe>
 </template>
 
 <script>
 import { ref } from 'vue';
 
+const defaultContent =
+  '<ol class="custom_cn2 list-paddingleft-1"><li class="list-cn-3-1 list-cn2-paddingleft-1"><p>Vue</p></li><li class="list-cn-3-2 list-cn2-paddingleft-1"><p>React</p></li></ol>';
+
 export default {
   setup() {
     const UEDITOR_HOME_URL =
       process.env.NODE_ENV === 'development' ? '/UEditor/' : `${process.env.PUBLIC_PATH}UEditor/`;
-    const msg = ref(
-      '<ol class="custom_cn2 list-paddingleft-1"><li class="list-cn-3-1 list-cn2-paddingleft-1"><p>Vue</p></li><li class="list-cn-3-2 list-cn2-paddingleft-1"><p>React</p></li></ol>'
-    );
+    const msg = ref(defaultContent);
 
     return {
       msg,
@@ -29,11 +35,22 @@ export default {
       iframeSrc: `${UEDITOR_HOME_URL}previewer.html`,
     };
   },
+  watch: {
+    msg() {
+      this.preview();
+    },
+  },
   methods: {
-    onPreview() {
-      const frameWindow = document.getElementById('previewer').contentWindow;
+    onEditorReady(editor) {
+      this.editor = editor;
+    },
+    preview() {
+      const frame = this.$refs.previewer;
+      const frameWindow = frame.contentWindow;
       // 通过 postMessage 把富文本内容发送给 iframe 子页面
       frameWindow.postMessage(this.msg);
+      // 调整预览区域的高度
+      frame.style.height = this.editor.body.style.height;
     },
   },
 };
