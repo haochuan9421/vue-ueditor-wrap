@@ -200,7 +200,7 @@ methods: {
 
 #### 方式一、去 GitHub 提 [ISSUE](https://github.com/HaoChuan9421/vue-ueditor-wrap/issues)
 
-#### 方式二、添加我的微信，备注 "ueditor"，拉你进交流区。
+#### 方式二、添加我的微信，备注 "ueditor"。
 
 <img src="https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" width="200" />
 
