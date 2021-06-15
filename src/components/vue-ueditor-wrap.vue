@@ -10,11 +10,17 @@ import debounce from '../utils/debounce.js';
 import asyncSeries from '../utils/async-series.js';
 import randomString from '../utils/randomString.js';
 
+const STATUS_MAP = {
+  UN_READY: 'UN_READY', // 尚未初始化
+  PENDING: 'PENDING', // 开始初始化但尚未 ready
+  READY: 'READY' // 初始化完成并已 ready
+};
+
 export default {
   name: 'VueUeditorWrap',
   data () {
     return {
-      isEditorReady: false,
+      status: STATUS_MAP.UN_READY,
       defaultConfig: {
         // VUE CLI 3 会添加 process.env.BASE_URL 的环境变量，而 VUE CLI 2 没有，所以借此设置 UEDITOR_HOME_URL，能涵盖大部分 Vue 开发者的使用场景
         UEDITOR_HOME_URL:
@@ -143,11 +149,11 @@ export default {
       this.$emit('beforeInit', this.id, this.mixedConfig); // 虽然这个驼峰的写法会导致使用 DOM 模版时出现监听事件自动转小写的 BUG，但如果经过编译的话并不会有这个问题，为了兼容历史版本，不做删除，参考 https://vuejs.org/v2/guide/components-custom-events.html#Event-Names
       this.editor = window.UE.getEditor(this.id, this.mixedConfig);
       this.editor.addListener('ready', () => {
-        if (this.isEditorReady) {
+        if (this.status === STATUS_MAP.READY) {
           // 使用 keep-alive 组件会出现这种情况
           this.editor.setContent(this.value);
         } else {
-          this.isEditorReady = true;
+          this.status = STATUS_MAP.READY;
           this.$emit('ready', this.editor);
           if (this.value) {
             this.editor.setContent(this.value);
@@ -316,9 +322,8 @@ export default {
   watch: {
     value: {
       handler (value) {
-        if (this.isEditorReady) {
-          value === this.innerValue || this.editor.setContent(value || '');
-        } else {
+        if (this.status === STATUS_MAP.UN_READY) {
+          this.status = STATUS_MAP.PENDING;
           (this.forceInit || typeof window !== 'undefined') &&
             this._loadEditorDependencies()
               .then(() => {
@@ -331,6 +336,8 @@ export default {
                   '[vue-ueditor-wrap] UEditor 资源加载失败！请检查资源是否存在，UEDITOR_HOME_URL 是否配置正确！'
                 );
               });
+        } else if (this.status === STATUS_MAP.READY) {
+          value === this.innerValue || this.editor.setContent(value || '');
         }
       },
       immediate: true
