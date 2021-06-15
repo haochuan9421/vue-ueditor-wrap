@@ -63,7 +63,13 @@ export default defineComponent({
   emits: ['update:modelValue', 'before-init', 'ready'],
 
   setup(props, { emit }) {
-    let isEditorReady = false;
+    const STATUS_MAP = {
+      UN_READY: 'UN_READY', // 尚未初始化
+      PENDING: 'PENDING', // 开始初始化但尚未 ready
+      READY: 'READY', // 初始化完成并已 ready
+    };
+
+    let status = STATUS_MAP.UN_READY;
     let editor: any;
     let observer: MutationObserver;
     let innerValue: string;
@@ -205,11 +211,11 @@ export default defineComponent({
       emit('before-init', editorId);
       editor = window.UE.getEditor(editorId, props.config);
       editor.addListener('ready', () => {
-        if (isEditorReady) {
+        if (status === STATUS_MAP.READY) {
           // 使用 keep-alive 组件会出现这种情况
           editor.setContent(props.modelValue);
         } else {
-          isEditorReady = true;
+          status = STATUS_MAP.READY;
           emit('ready', editor);
           if (props.modelValue) {
             editor.setContent(props.modelValue);
@@ -226,9 +232,8 @@ export default defineComponent({
     watch(
       modelValue,
       (value) => {
-        if (isEditorReady) {
-          value === innerValue || editor.setContent(value || '');
-        } else {
+        if (status === STATUS_MAP.UN_READY) {
+          status = STATUS_MAP.PENDING;
           (props.forceInit || typeof window !== 'undefined') &&
             loadEditorDependencies()
               .then(() => {
@@ -239,6 +244,8 @@ export default defineComponent({
                   '[vue-ueditor-wrap] UEditor 资源加载失败！请检查资源是否存在，UEDITOR_HOME_URL 是否配置正确！'
                 );
               });
+        } else if (status === STATUS_MAP.READY) {
+          value === innerValue || editor.setContent(value || '');
         }
       },
       {
