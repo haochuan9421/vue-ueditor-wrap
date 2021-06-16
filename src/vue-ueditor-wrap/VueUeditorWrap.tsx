@@ -1,4 +1,4 @@
-import { defineComponent, PropType, watch, nextTick, toRef, ref, onDeactivated, onUnmounted } from 'vue';
+import { defineComponent, PropType, watch, nextTick, toRef, ref, onDeactivated, onBeforeUnmount } from 'vue';
 import { LoadEvent, debounce, asyncSeries, randomString } from '../utils';
 
 export type ModeType = 'observer' | 'listener';
@@ -263,7 +263,7 @@ export default defineComponent({
       observer && observer.disconnect();
     });
 
-    onUnmounted(() => {
+    onBeforeUnmount(() => {
       if (observer && observer.disconnect) {
         observer.disconnect();
       }
