@@ -12,6 +12,7 @@
 | observer-options            | [MutationObserver 的参数 ](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit) | _object_      | 见文档网站                   |
 | observer-debounce-time      | MutationObserver 的回调函数防抖间隔                                                               | _number_      | 50                           |
 | forceInit                   | 跳过环境检测，直接初始化                                                                          | _boolean_     | false                        |
+| destroy                     | 是否在组建销毁时销毁 UEditor 实例                                                                 | _boolean_     | true                         |
 | editor-dependencies         | 指定使用 UEditor 所需要加载的 JS 和 CSS                                                           | _string[]_    |                              |
 | editor-dependencies-checker | 检测依赖的静态资源是否加载完成的方法                                                              | _()=>boolean_ |                              |
 
