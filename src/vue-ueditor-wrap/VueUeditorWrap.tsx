@@ -50,6 +50,11 @@ export default defineComponent({
     },
     //  SSR 项目，服务端实例化组件时组件内部不会对 UEditor 进行初始化，仅在客户端初始化 UEditor，这个参数设置为 true 可以跳过环境检测，直接初始化
     forceInit: Boolean,
+    // 是否在组建销毁时销毁 UEditor 实例
+    destroy: {
+      type: Boolean,
+      default: true,
+    },
     // 指定 UEditor 依赖的静态资源，js & css
     editorDependencies: {
       type: Array as PropType<string[]>,
@@ -262,7 +267,7 @@ export default defineComponent({
       if (observer && observer.disconnect) {
         observer.disconnect();
       }
-      if (editor && editor.destroy) {
+      if (props.destroy && editor && editor.destroy) {
         editor.destroy();
       }
     });
