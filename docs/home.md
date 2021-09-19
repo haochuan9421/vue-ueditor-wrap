@@ -88,3 +88,7 @@ export default {
 <img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" style="width: 200px" />
 
 如果你感兴趣的话，可以阅读一下本组件的源码，并不复杂，欢迎 PR。
+
+### 推广链接
+
+<a href="https://curl.qcloud.com/xn64xbRz" target="_blank"><img src="https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/qcloud-cps.jpg" style="width: 280px;"></a>
