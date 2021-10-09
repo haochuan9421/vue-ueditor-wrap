@@ -25,6 +25,8 @@ yarn add vue-ueditor-wrap@2.x
 
 > Vue 3 项目 [点击此处](https://hc199421.gitee.io/vue-ueditor-wrap/) 查看使用说明。
 
+> 安装太慢？试试 [URM](https://github.com/HaoChuan9421/urm)
+
 ## Quick Start
 
 1. 下载 UEditor
