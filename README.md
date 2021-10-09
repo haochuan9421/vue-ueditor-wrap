@@ -31,6 +31,8 @@ npm i vue-ueditor-wrap@3.x
 yarn add vue-ueditor-wrap@3.x
 ```
 
+> 安装太慢？试试 [URM](https://github.com/HaoChuan9421/urm)
+
 ## Quick Start
 
 1. 下载 UEditor
