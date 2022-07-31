@@ -27,8 +27,8 @@ export default {
   },
   created() {
     this.editorConfig = {
-      serverUrl: '//ueditor.szcloudplus.com/cos',
-      UEDITOR_HOME_URL: '//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/',
+      serverUrl: '//ueditor.zhenghaochuan.com/cos',
+      UEDITOR_HOME_URL: '//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/static/UEditor/utf8-php/',
       toolbars: [
         [
           'undo',
@@ -105,7 +105,7 @@ export default {
           'drafts',
         ],
       ],
-      listiconpath: `//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/listicon/`,
+      listiconpath: `//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/static/UEditor/utf8-php/listicon/`,
     };
   },
   methods: {
@@ -125,7 +125,7 @@ export default {
           const btn = new window.UE.ui.Button({
             name: uiName,
             title: '鼠标悬停时的提示文字',
-            cssRules: `background-image: url('//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/custom/my-custom-button.png') !important; background-size: cover;`,
+            cssRules: `background-image: url('//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/static/UEditor/utf8-php/custom/my-custom-button.png') !important; background-size: cover;`,
             onclick: () => {
               this.showCustomVueDialog = true;
             },

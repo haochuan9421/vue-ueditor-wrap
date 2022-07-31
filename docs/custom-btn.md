@@ -4,4 +4,4 @@
 
 文件结构如下图所示：
 
-<img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/custom-btn.png" style="width: 100px; cursor: zoom-in;" onclick="this.style = this.style.width === '100px'? 'width: 500px; cursor: zoom-out;': 'width: 100px; cursor: zoom-in;'"/>
+<img src="//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/custom-btn.png" style="width: 100px; cursor: zoom-in;" onclick="this.style = this.style.width === '100px'? 'width: 500px; cursor: zoom-out;': 'width: 100px; cursor: zoom-in;'"/>

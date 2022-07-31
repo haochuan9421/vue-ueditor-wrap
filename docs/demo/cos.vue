@@ -14,9 +14,9 @@ export default {
   },
   created() {
     this.editorConfig = {
-      serverUrl: '//ueditor.szcloudplus.com/cos',
-      UEDITOR_HOME_URL: '//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/',
-      listiconpath: `//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/static/UEditor/utf8-php/listicon/`,
+      serverUrl: '//ueditor.zhenghaochuan.com/cos',
+      UEDITOR_HOME_URL: '//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/static/UEditor/utf8-php/',
+      listiconpath: `//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/static/UEditor/utf8-php/listicon/`,
     };
   },
 };

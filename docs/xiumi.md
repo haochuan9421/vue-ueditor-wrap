@@ -25,7 +25,7 @@
     },
     created() {
       this.editorConfig = {
-        serverUrl: '//ueditor.szcloudplus.com/cos',
+        serverUrl: '//ueditor.zhenghaochuan.com/cos',
         UEDITOR_HOME_URL: '/UEditor/',
         catchRemoteImageEnable: true, // 抓取远程图片
         // whiteList 已经在 ueditor.config.js 里改过了，此处略
@@ -46,7 +46,7 @@
 
 文件结构如下图所示：
 
-<img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/xiumi.png" style="width: 100px; cursor: zoom-in;" onclick="this.style = this.style.width === '100px'? 'width: 500px; cursor: zoom-out;': 'width: 100px; cursor: zoom-in;'"/>
+<img src="//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/xiumi.png" style="width: 100px; cursor: zoom-in;" onclick="this.style = this.style.width === '100px'? 'width: 500px; cursor: zoom-out;': 'width: 100px; cursor: zoom-in;'"/>
 
 <details>
 	  <summary>xiumi/xiumi-ue-dialog-v5.js</summary>
@@ -158,7 +158,7 @@ UE.registerUI('dialog', function (editor, uiName) {
 
 文件结构如下图所示：
 
-<img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/xiumi2.png" style="width: 100px; cursor: zoom-in;" onclick="this.style = this.style.width === '100px'? 'width: 500px; cursor: zoom-out;': 'width: 100px; cursor: zoom-in;'"/>
+<img src="//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/xiumi2.png" style="width: 100px; cursor: zoom-in;" onclick="this.style = this.style.width === '100px'? 'width: 500px; cursor: zoom-out;': 'width: 100px; cursor: zoom-in;'"/>
 
 <details>
 	  <summary>xiumi/xiumi-ue-dialog-v5.html</summary>

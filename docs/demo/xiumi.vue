@@ -18,7 +18,7 @@ export default {
     // 这里根据你项目的具体情况设置，我这么设置是针对这个文档网站的
     this.UEDITOR_HOME_URL = process.env.NODE_ENV === 'development' ? '/UEditor/' : `${process.env.PUBLIC_PATH}UEditor/`;
     this.editorConfig = {
-      serverUrl: '//ueditor.szcloudplus.com/cos',
+      serverUrl: '//ueditor.zhenghaochuan.com/cos',
       UEDITOR_HOME_URL: this.UEDITOR_HOME_URL,
       catchRemoteImageEnable: true, // 抓取远程图片
       listiconpath: `${this.UEDITOR_HOME_URL}listicon/`,

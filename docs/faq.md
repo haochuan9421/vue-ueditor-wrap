@@ -2,7 +2,7 @@
 
 使用 UEditor 时需要加载相关的静态资源，这些资源会通过 script、link 标签等直接引入。UEditor 相关文件的目录结构是固定的，所以只需要知道这些静态资源所在的根路径，再拼接上具体文件自己的 path 就可以了，如下图：
 
-<img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/home_url.png" style="width: 500px; border-radius: 0;" />
+<img src="//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/home_url.png" style="width: 500px; border-radius: 0;" />
 
 UEDITOR_HOME_URL 说白了就是 UEditor 文件夹的访问路径。所以具体怎么设置，就取决于你的项目了。可能你项目部署之后 UEditor 静态资源的访问路径是 `/UEditor/`，也有可以能是 `/my-app/UEditor/`。
 
@@ -14,11 +14,11 @@ process.env.NODE_ENV === 'development' ? '/UEditor/' : `${process.env.PUBLIC_PAT
 
 如果 UEDITOR_HOME_URL 设置错误，无法加载到 UEditor 相关的资源，会在控制台抛出如下的错误：
 
-<img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/load-error.png" style="width: 400px; border-radius: 0;" />
+<img src="//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/load-error.png" style="width: 400px; border-radius: 0;" />
 
 ### 2、如何上传图片和文件？为什么我会看到“后台配置项返回格式出错”
 
-<img src="//ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/error-server.png" style="width: 500px; border-radius: 0;" />
+<img src="//cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/error-server.png" style="width: 500px; border-radius: 0;" />
 
 UEditor 需要部署对应的后端服务，才能正常使用图片上传、远程图片抓取等功能。
 
@@ -26,13 +26,13 @@ UEditor 需要部署对应的后端服务，才能正常使用图片上传、远
 
 我在参考 PHP 代码后，简单实现了一个 [Node.js 版的 UEditor 服务](https://github.com/HaoChuan9421/ueditor-koa-server)，以供有需要的同学参考。基于 Koa2 + TypeScript 开发。
 
-`serverUrl` 为 `https://ueditor.szcloudplus.com/cos`。仅供测试！！！万不可用于生产环境！！！⛔️⛔️⛔️
+`serverUrl` 为 `https://ueditor.zhenghaochuan.com/cos`。仅供测试！！！万不可用于生产环境！！！⛔️⛔️⛔️
 
 ### 3、图片、文件等如何上传到腾讯云对象存储、阿里云对象存储。。。
 
 这类云存储服务一般都会提供针对后端的 SDK，后端只需要在接收到前端上传的文件后把它们转存到这些三方的存储服务中即可，这和把文件存储到服务器的磁盘上并没多大区别，并不需要前端同学做什么。
 
-这个 `serverUrl` —— `https://ueditor.szcloudplus.com/cos`，就是基于腾讯云 COS 的 Node.js SDK 做的，其他后端语言也差不多，代码还是在 [这个仓库](https://github.com/HaoChuan9421/ueditor-koa-server) 里。
+这个 `serverUrl` —— `https://ueditor.zhenghaochuan.com/cos`，就是基于腾讯云 COS 的 Node.js SDK 做的，其他后端语言也差不多，代码还是在 [这个仓库](https://github.com/HaoChuan9421/ueditor-koa-server) 里。
 
 ### 4、UEDITOR_HOME_URL 可以设置为 xxx 对象存储、xxx CDN 的地址吗
 
