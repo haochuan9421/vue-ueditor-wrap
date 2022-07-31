@@ -33,8 +33,8 @@ yarn add vue-ueditor-wrap@2.x
 
 | 编码方式\语言 | PHP                                                                               | NET                                                                               | JSP                                                                               | ASP                                                                               |
 | ------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| utf8          | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-php.zip) | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-net.zip) | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-jsp.zip) | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/utf8-asp.zip) |
-| gbk           | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-php.zip)  | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-net.zip)  | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-jsp.zip)  | [下载](https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/zip/gbk-asp.zip)  |
+| utf8          | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/utf8-php.zip) | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/utf8-net.zip) | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/utf8-jsp.zip) | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/utf8-asp.zip) |
+| gbk           | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/gbk-php.zip)  | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/gbk-net.zip)  | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/gbk-jsp.zip)  | [下载](https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/zip/gbk-asp.zip)  |
 
 > UEditor 并不支持通过 npm 的方式来安装，vue-ueditor-wrap 也只是一个 Vue 组件，组件本身并不是 **UEditor 的 Vue 版**。了解 UEditor 基本使用，请参考 [UEditor 官网](http://fex.baidu.com/ueditor/#start-start)。
 
@@ -42,7 +42,7 @@ yarn add vue-ueditor-wrap@2.x
 
 将解压的文件夹重命名为 UEditor 并移动到你项目的[静态资源](https://cli.vuejs.org/zh/guide/html-and-static-assets.html#public-文件夹)目录下，比如下面是一个由 Vue CLI（v3+）创建的项目，静态资源目录就是 public。
 
-<img src="https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/static-dir.png" width="300" />
+<img src="https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/static-dir.png" width="300" />
 
 2. 引入`VueUeditorWrap`组件
 
@@ -90,7 +90,7 @@ yarn add vue-ueditor-wrap@2.x
           // 访问 UEditor 静态资源的根路径，可参考 https://hc199421.gitee.io/vue-ueditor-wrap/#/faq
           UEDITOR_HOME_URL: "/UEditor/",
           // 服务端接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
-          serverUrl: "//ueditor.szcloudplus.com/cos",
+          serverUrl: "//ueditor.zhenghaochuan.com/cos",
         },
       };
     },
@@ -209,7 +209,7 @@ methods: {
 
 #### 方式二、添加我的微信，备注 "ueditor"。
 
-<img src="https://ueditor-1302968899.cos.ap-guangzhou.myqcloud.com/doc/wechat.JPG" width="200" />
+<img src="https://cdn.zhenghaochuan.com/p/vue-ueditor-wrap/doc/wechat.JPG" width="200" />
 
 如果你感兴趣的话，可以阅读一下本组件的源码，并不复杂，欢迎 PR。
 

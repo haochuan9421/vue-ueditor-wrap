@@ -37,7 +37,7 @@ export default {
       msg: '',
       editorConfig: {
         UEDITOR_HOME_URL: '/UEditor/',
-        serverUrl: '//ueditor.szcloudplus.com/cos'
+        serverUrl: '//ueditor.zhenghaochuan.com/cos'
       }
     };
   },
